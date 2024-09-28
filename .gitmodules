@@ -1,0 +1,3 @@
+[submodule "Essays"]
+	path = Essays
+	url = git@github.com:NeoNexusX/Essays.git
