@@ -1,8 +1,17 @@
 ---
 title: NAS服务器使用说明
+categories:
+  - Bionet
+tags:
+  - Bionet
+  - NAS
+
+
 ---
 
 # NAS服务器使用说明
+
+<img src="https://s2.loli.net/2024/09/29/F4JzXvoRg5kuWin.jpg" alt="[lab.magiconch.com][福音戰士標題生成器]-1727547916644" style="zoom:50%;" />
 
 <img src="https://s2.loli.net/2023/09/18/zXu5EpoCmKH8FiJ.jpg" alt="标准监督" style="zoom: 50%;" />
 

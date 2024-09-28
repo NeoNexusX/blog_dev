@@ -1,9 +1,15 @@
 ---
 title: BionetServer-No1使用说明-进阶（Docker方式）
-
+categories:
+  - Bionet
+tags:
+  - Bionet
+  - ops
 ---
 
 # BionetServer-No1使用说明-进阶（Docker方式）
+
+<img src="https://s2.loli.net/2024/09/29/qWjluktz8hxAV4E.jpg" alt="[lab.magiconch.com][福音戰士標題生成器]-1727547630579" style="zoom:50%;" />
 
 <img src="https://s2.loli.net/2023/09/18/zXu5EpoCmKH8FiJ.jpg" alt="标准监督" style="zoom: 50%;" />
 

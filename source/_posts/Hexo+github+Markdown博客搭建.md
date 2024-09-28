@@ -1,9 +1,18 @@
 ---
 title: Hexo+github+Markdown博客搭建
-
+categories:
+  - Bionet
+tags:
+  - Bionet
+  - blog
+  - hexo
 ---
 
 # Hexo+github+Markdown博客搭建
+
+
+
+<img src="https://s2.loli.net/2024/09/29/6Xo9VwZBhLIJ8Yk.jpg" alt="[lab.magiconch.com][福音戰士標題生成器]-1727549184424" style="zoom:50%;" />
 
 <img src="https://s2.loli.net/2023/09/18/zXu5EpoCmKH8FiJ.jpg" alt="标准监督" style="zoom: 50%;" />
 

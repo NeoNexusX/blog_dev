@@ -70,4 +70,8 @@ about_pic: about.png
 
 image_zoom:
   enable: true
+
+css:
+  - /style/_custom.css
+
  
