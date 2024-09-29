@@ -1,7 +1,6 @@
 # main menu navigation
 menu:
   Home: /
-  About: /about
   Archive: /archives
 
 widgets:
@@ -17,21 +16,14 @@ social:
   twitter: /
   facebook: /
   instagram: /
-  github: https://github.com/NeoNexusX
+  github: NeoNexusX
 
 user:
   name: NeoNexus
-  avatar:
-  location: XiaMen
+  avatar: https://s2.loli.net/2024/09/29/3wrsfjJK91xTciR.png
+  location: Earth
   description: YOU CAN REDO
   footnotes: # footnotes
-
-# documents: https://github.com/utterance/utterances
-# API config: https://utteranc.es/
-comment_utteranc:
-  enable: true
-  repo: Haojen/Claudia-theme-blog # your blog repo
-
 
 # documents: https://valine.js.org/quickstart.html
 comment_valine:
@@ -39,15 +31,11 @@ comment_valine:
   appId: hUPsiqArOXp6TNWbIGsRugoz-gzGzoHsz
   appKey: bMOEIPDsFffDM5KYhZcZFDwr
 
-comment_disqus:
-    enable: false
-    url:  # the url of your website main domain like this https://xxx.xxx/
-    name: # the short name in disqus
 
 # dark
 # light
 # user-can-set
-appearance: dark # Default value is auto
+appearance: auto # Default value is auto
 
 # Miscellaneous
 favicon: images/favicon.ico
@@ -57,7 +45,8 @@ friend_links:
     link: https://www.google.com/
   - title: Github
     link: https://www.github.com/
-
+  - title: Bionet
+    link: https://bionet.xmu.edu.cn/
 # Google Analytics
 ga_track_id:
 ga_domain:
@@ -71,7 +60,7 @@ about_pic: about.png
 image_zoom:
   enable: true
 
-css:
-  - /style/_custom.css
+mathjax:
+  enable: true
+  cdn: https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
- 
