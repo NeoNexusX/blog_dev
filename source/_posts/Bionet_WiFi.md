@@ -6,6 +6,7 @@ tags:
   - Bionet
   - A406
   - WIFI
+date: "2024/12/31 20:46:25"
 ---
 
 # Bionet_WIFI使用指南

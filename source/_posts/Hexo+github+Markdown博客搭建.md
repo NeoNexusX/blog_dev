@@ -18,6 +18,10 @@ tags:
 
 <!-- toc -->
 
+[TOC]
+
+
+
 ### 特性：
 
 - build工具链支持跨平台使用：linux & windows
@@ -469,7 +473,7 @@ sudo systemctl restart nginx
 
 <img src="https://s2.loli.net/2024/09/28/PJL5cakTy9GQ6rK.png" alt="image-20240928225345569" style="zoom:67%;" />
 
-### 完成多平台同步推送
+## 完成多平台同步推送
 
 多平台同步推送依赖于hexo的deploy功能，根据官方文档，我需要向git和一台服务器进行推送，为了满足这个要求，我们将项目的配置文件修改为如下形式：
 
@@ -498,3 +502,32 @@ hexo deploy
 实现推送，效果如下：
 
 <img src="https://s2.loli.net/2024/09/28/UrhAX79sebBWauf.png" alt="image-20240928231857713" style="zoom:67%;" />
+
+## 添加Math公式支持
+
+依据博客修改：
+
+https://pku-zyf.github.io/formula/
+
+将上文post.pug添加如下脚本内容：
+
+```pug
+    if theme.mathjax.enable
+      script(type="text/x-mathjax-config").
+        MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            processEscapes: true,
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+          }
+        });
+        MathJax.Hub.Queue(function() {
+          var all = MathJax.Hub.getAllJax(), i;
+          for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+          }
+        });
+      script(type="text/javascript", src=theme.mathjax.cdn)
+```
+
+注意缩进和空格，剩下完全和博客内容一致，不再赘述，只不过不需要打开MathJax开关部分内容。
