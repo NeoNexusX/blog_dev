@@ -35,7 +35,7 @@ comment_valine:
 # dark
 # light
 # user-can-set
-appearance: auto # Default value is auto
+appearance: light # Default value is auto
 
 # Miscellaneous
 favicon: images/favicon.ico
@@ -47,13 +47,7 @@ friend_links:
     link: https://www.github.com/
   - title: Bionet
     link: https://bionet.xmu.edu.cn/
-# Google Analytics
-ga_track_id:
-ga_domain:
-
-# Baidu Analytics
-ba_track_id:
-
+    
 # picture of about page
 about_pic: about.png
 
@@ -62,5 +56,7 @@ image_zoom:
 
 mathjax:
   enable: true
-  cdn: https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  cdn: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  
+
 

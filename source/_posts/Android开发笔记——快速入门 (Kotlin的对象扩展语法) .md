@@ -1,5 +1,5 @@
 ---
-title:  Android开发笔记——快速入门（Kotlin的对象扩展与高阶函数深入）
+title: Android开发笔记——快速入门（Kotlin的对象扩展与高阶函数深入）
 categories:
   -  Android
   -  Kotlin

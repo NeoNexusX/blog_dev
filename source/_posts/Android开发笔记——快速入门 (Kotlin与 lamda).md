@@ -1,5 +1,5 @@
 ---
-title:  Android开发笔记——快速入门（Kotlin与lambda）
+title: Android开发笔记——快速入门（Kotlin与lambda）
 categories:
   -  Android
   -  Kotlin

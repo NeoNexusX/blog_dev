@@ -43,8 +43,8 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: false
+# _config.yml
 syntax_highlighter:
-
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
 # per_page: Posts displayed per page. (0 = disable pagination)
@@ -111,9 +111,10 @@ deploy:
   
  # mermaid chart
 mermaid: ## mermaid url https://github.com/knsv/mermaid
-  enable: true  # default true
+  enable: true # default true
   options:  # find more api options from https://github.com/knsv/mermaid/blob/master/src/mermaidAPI.js
     #startOnload: true  // default true
+    
 math:
   engine: 'mathjax'
   mathjax:

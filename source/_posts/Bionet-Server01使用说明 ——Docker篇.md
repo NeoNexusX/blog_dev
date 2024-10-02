@@ -5,7 +5,7 @@ categories:
 tags:
   - Bionet
   - ops
-date: "2024/12/31 20:46:25"
+date: 2024/9/29 22:22:00
 ---
 
 # BionetServer-No1使用说明-进阶（Docker方式）

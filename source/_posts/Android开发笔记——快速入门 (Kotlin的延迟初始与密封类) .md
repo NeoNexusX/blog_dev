@@ -1,5 +1,5 @@
 ---
-title: # Android开发笔记——快速入门 (Kotlin的延迟初始化与Viewbinding、密封类)
+title: Android开发笔记——快速入门 (Kotlin的延迟初始化与Viewbinding、密封类)
 categories:
   -  Android
 tags:
@@ -10,9 +10,9 @@ excerpt: "Kotlin的延迟初始化与Viewbinding、密封类"
 
 # Android开发笔记——快速入门 (Kotlin的延迟初始化与Viewbinding、密封类)
 
-![[lab.magiconch.com][福音戰士標題生成器]-1727618527687](https://s2.loli.net/2024/09/29/kAI59OWGPqluiQN.jpg)
+<img src="https://s2.loli.net/2024/09/29/kAI59OWGPqluiQN.jpg" alt="[lab.magiconch.com][福音戰士標題生成器]-1727618527687" style="zoom:50%;" />
 
-<img src="https://s2.loli.net/2023/09/18/zXu5EpoCmKH8FiJ.jpg" alt="标准监督" style="zoom:67%;" />
+<img src="https://s2.loli.net/2023/09/18/zXu5EpoCmKH8FiJ.jpg" alt="标准监督" style="zoom: 50%;" />
 
 #### 软件环境：
 

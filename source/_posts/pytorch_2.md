@@ -23,10 +23,6 @@ excerpt: "本文主要讲述了方向余弦、偏导数和方向导数的概念�
 
 
 
-## 配套代码下载地址：
-
-[gitee-pytorch](https://gitee.com/jszszzy/pytorch-study)
-
 ## 基础知识：
 
 要想训练一个网络，对于梯度的理解是必不可少的，下面首先介绍梯度的一些基础概念。
@@ -179,34 +175,33 @@ $$
 
 结果是一模一样的，只不过这里的切线是对应的在曲线上的切线，我们这里就引出方向导数的定义如下：
 $$
-\left. \frac{\partial f}{\partial l}\right|_{\left(x_{0}, y_{0}\right)}=\lim _{t \rightarrow 0^{+}} \frac{f\left(x_{0}+t \cos \alpha, y_{0}+t \cos \beta\right)-f\left(x_{0}, y_{0}\right)}{t}
+\left. \frac{\partial f}{\partial l} \right|_ {\left(x_{0}, y_{0}\right)} = \lim_{t \rightarrow 0^{+}} \frac{f\left(x_{0} + t \cos \alpha, y_{0} + t \cos \beta \right) - f\left(x_{0}, y_{0}\right)}{t}
 $$
-$$
-\text { 从方向导数的定义可知,方向导数 }\left.\frac{\partial f}{\partial l}\right|_{\left(x_{0}, y_{0}\right)} \text { 就是函数 } f(x, y) \text { 在点 } P_{0}\left(x_{0}, y_{0}\right) \text { 处沿方向 } l \text { 的变化率. }
-$$
+
+
+从方向导数的定义可知，方向导数：$ \left. \frac{\partial f}{\partial l}\right|_ {\left(x_{0}, y_{0}\right)} $就是函数 $ f(x, y)  在点  P_{0}(x_{0}, y_{0})  $​​处沿方向 \( l \) 的变化率。
 
 定理：
 
+如果函数$f(x, y)$ 在点$P_{0}\left(x_{0}, y_{0}\right)$可微分,那么函数在该点沿任一方向 的方向导数存在,且有 :
 $$
-\text { 如果函数 } f(x, y) \text { 在点 } P_{0}\left(x_{0}, y_{0}\right) \text { 可微分,那么函数在该点沿任一方向 的方向导数存在,且有 :}
+\left.\frac{\partial f}{\partial l}\right|_ {\left(x_{0}, y_{0}\right)}=f_{x}\left(x_{0}, y_{0}\right) \cos \alpha+f_{y}\left(x_{0}, y_{0}\right) \cos \beta
 $$
+注意里面为偏导 实际上就分解成了X Y轴上函数变化率。
 
-$$
-\left.\frac{\partial f}{\partial l}\right|_{\left(x_{0}, y_{0}\right)}=f_{x}\left(x_{0}, y_{0}\right) \cos \alpha+f_{y}\left(x_{0}, y_{0}\right) \cos \beta \\注意里面为偏导 实际上就分解成了X Y轴上函数变化率
-$$
 其中, $\cos \alpha \text { 和 } \cos \beta$是向量$l$ 的方向余弦。
 
 这里再说明一下方向导数和偏导数有什么区别呢？
 
 偏导数实际上方向导数的特例，当向量取x的正轴的时候，此时方向导数就转变为了对于x的偏导数，推导如下：
 $$
-\left.\frac{\partial f}{\partial l}\right|_{\left(x_{0}, y_{0}\right)} = \lim _{t \rightarrow 0^{+}} \frac{f\left(x_{0}+t \cos \alpha, y_{0}\right)-f\left(x_{0}, y_{0}\right)}{t}
+\left.\frac{\partial f}{\partial l}\right|_ {\left(x_{0}, y_{0}\right)} = \lim_ {t \rightarrow 0^{+}} \frac{f\left(x_{0}+t \cos \alpha, y _{0}\right)-f\left(x _{0}, y _{0}\right)}{t}
 $$
 如果你仔细看就会发现实际上这里的定义就是偏导数的定义，也就说是方向导数的一种情况。
 
 其次再说明一下，这个式子的意义在哪里：
 $$
-\left.\frac{\partial f}{\partial l}\right|_{\left(x_{0}, y_{0}\right)}=f_{x}\left(x_{0}, y_{0}\right) \cos \alpha+f_{y}\left(x_{0}, y_{0}\right) \cos \beta 
+\left.\frac{\partial f}{\partial l}\right|_ {\left(x_{0}, y_{0}\right)}=f_{x}\left(x_{0}, y_{0}\right) \cos \alpha+f_{y}\left(x_{0}, y_{0}\right) \cos \beta
 $$
 实际上，我们用来计算方向导数的时候就是使用这个式子，这个式子就是将对应的方向向量分解为x轴和y轴的方向余弦来进行计算，也就说方向向量实际上是由x轴和y轴的方向余弦构成的。
 
@@ -220,11 +215,11 @@ $$
 $$
 已知在某个点有方向导数存在下列关系：
 $$
-\frac{\partial f}{\partial l}=\frac{\partial f}{\partial x} \cos \varphi+\frac{\partial f}{\partial y} \sin \varphi=\left\{\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\right\} \cdot\{\cos \varphi, \sin \varphi\}
+\\frac{\\partial f}{\\partial l} = \\frac{\\partial f}{\\partial x} \\cos \\varphi + \\frac{\\partial f}{\\partial y} \\sin \\varphi = \\left\\{\\frac{\\partial f}{\\partial x}, \\frac{\\partial f}{\\partial y}\\right\\} \\cdot \\{\\cos \\varphi, \\sin \\varphi\\}
 $$
 
 
-在方向 **L **上满足如下单位向量：
+在方向 **L**上满足如下单位向量：
 $$
 \overrightarrow{\boldsymbol{e}}=\cos \varphi \overrightarrow { \boldsymbol{i}}+\sin \varphi \overrightarrow{ \vec{j} }
 $$
@@ -291,13 +286,10 @@ $$
 
 **$w$的更新方法**：
 
-1.  计算$$w$$的梯度（导数）
+1.  计算$w$的梯度（导数）
 
 $$
-\begin{align*}
 \nabla w = \frac{f(w+0.000001)-f(w-0.000001)}{2*0.000001} 
-
-\end{align*}
 $$
 
 2. 更新$w$

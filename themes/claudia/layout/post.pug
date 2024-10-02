@@ -69,30 +69,38 @@ block script
         script(src= url_for("/js/jquery-fancybox.min.js"))
         script(src= url_for("/js/img_zoom.js"))
     script(src= url_for("/js/post.js"))
-    
-    script(src=`https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js` onload="initMermaid()")
-    script.
-      function initMermaid() {
-       console.log("fuck you");
-        if (window.mermaid) {
-          console.log("fuck you");
-          mermaid.initialize({ theme: 'forest' });
-        }
-      }
+      
     if theme.mathjax.enable
-      script(type="text/x-mathjax-config").
-        MathJax.Hub.Config({
-          tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      script(type="text/javascript").
+        window.MathJax = {
+          tex: {
+            inlineMath: [['$', '$']],
+            displayMath: [['$$', '$$']],
             processEscapes: true,
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            tags: 'ams' // 如果需要支持自动编号
+         },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            enableMenu: true,
+          },
+          startup: {
+            ready: () => {
+              MathJax.startup.defaultReady();
+              MathJax.startup.promise.then(() => {
+                // 处理公式渲染完成后的回调函数
+                document.querySelectorAll('.MathJax').forEach((el) => {
+                  el.parentNode.classList.add('has-jax');
+                });
+              });
+            }
           }
-        });
-        MathJax.Hub.Queue(function() {
-          var all = MathJax.Hub.getAllJax(), i;
-          for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-          }
-        });
+        };
       script(type="text/javascript", src=theme.mathjax.cdn)
+      script(src=`https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js`)
+      script.
+        function initMermaid() {
+          if (window.mermaid) {
+            mermaid.initialize({ theme: 'forest' });
+          }
+        }
 
