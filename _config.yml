@@ -100,14 +100,6 @@ deploy:
   - type: git
     repository: git@github.com:NeoNexusX/NeoNexusX.github.io.git
     branch: main
-  - type: rsync
-    host: 10.26.58.109
-    user: orangepi
-    root: /home/orangepi/blogs
-    port: 22
-    delete: true
-    verbose: true
-    ignore_errors: false
   
  # mermaid chart
 mermaid: ## mermaid url https://github.com/knsv/mermaid

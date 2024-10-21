@@ -12,7 +12,6 @@ widgets:
 
 # social config
 social:
-  zhihu:
   twitter: /
   facebook: /
   instagram: /
@@ -35,7 +34,7 @@ comment_valine:
 # dark
 # light
 # user-can-set
-appearance: light # Default value is auto
+appearance: auto # Default value is auto
 
 # Miscellaneous
 favicon: images/favicon.ico
@@ -47,6 +46,8 @@ friend_links:
     link: https://www.github.com/
   - title: Bionet
     link: https://bionet.xmu.edu.cn/
+  - title: 風の城
+    link: https://www.miyazawafuka.top/
     
 # picture of about page
 about_pic: about.png
@@ -59,4 +60,9 @@ mathjax:
   cdn: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
   
 
+#Baidu Analytics**
+ba_track_id: 1c102c8d6549c8317b34036a36f85904
 
+#Google Analytics
+ga_track_id: G-E0GBC11CTD
+ga_domain: neonexusx.github.io
