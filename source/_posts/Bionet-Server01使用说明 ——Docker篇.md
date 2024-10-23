@@ -19,9 +19,10 @@ Version:1.0
 基础篇更新记录：
 
 - 简化了文档的内容，拆分了文档分为入门和进阶使用，Docker版本添加R的使用，删除了Matlab版本的内容，请使用桌面版本。
+- 更新了R语言的存储配置，用户无需关心是如何实现的，直接就可以与主机和NAS相连。避免了以前繁琐的配置。
 
 
-Date: 2024.06.07
+Date: 2024.10.23
 
 Authors：NeoNeuxs
 
@@ -702,23 +703,11 @@ kill -9 10970 11173
 
 #### R的路径共享
 
-R的路径共享如下图，每一个版本都是遵循此图：
+host文件夹连接了主机的home文件夹。
 
-除了P_Share其他文件夹都是可读可写的。
+Datasets文件夹连接了NAS的数据中心，与主机上/home/Datasets文件夹是同一个文件夹。
 
-<img src="https://s2.loli.net/2024/05/26/s1bg6ZnlSGfKqXD.png" alt="image-20240526144045717" style="zoom:80%;" />
-
-#### 修改当前的工作目录
-
-R的默认工作目录看不到这四个文件夹，需要手动设置工作目录，使用命令：
-
-```
-setwd("/home/host/")
-```
-
-使用之后刷新页面即可。
-
-<img src="https://s2.loli.net/2024/05/26/QljKIAxuLzprnVO.png" alt="image-20240526144946598" style="zoom:80%;" />
+<img src="https://s2.loli.net/2024/10/23/JtnciVDZ435kx8O.png" alt="image-20241023230045769" style="zoom:67%;" />
 
 ## Q&A：
 

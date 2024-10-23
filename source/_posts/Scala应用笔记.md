@@ -5,7 +5,7 @@ categories:
 tags:
   -  Scala
 excerpt: " Scala基础 Spark是专为大规模数据处理而设计的快速通用的计算引擎，它是由Scala语言开发实现的，关于大数据技术，本身就是计算数据，而Scala既有面向对象组织项目工程的 能力，又具备计算数据的功能，同时Spark和Scala的紧密集成，所以学习Spark之前强烈推荐学习Scala，虽然我认为scala是一门烂语言，各种特性学起来十分折磨人，但介于Spark的强大，这里还是推荐使用Scala作为使用的语言。"
-
+date: 2024/10/22 00:00:00
 ---
 
 # Scala基础笔记

@@ -9,6 +9,7 @@ tags:
   - Hadoop
   - Scala
 excerpt: "Spark的AVRO数据报错。"
+date: 2024/10/22 00:00:00
 ---
 
 # Spark快速大数据分析——Spark的结构化数据API（伍—分支1）

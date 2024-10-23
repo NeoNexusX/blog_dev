@@ -9,6 +9,7 @@ tags:
   - Hadoop
   - Scala
 excerpt: "Spark的Hadoop配置，Hadoop的单机模式无需额外配置，直接运行即可，适合调试；伪分布式模式需修改配置文件，并运行HDFS读取文件。运行MapReduce时，确保输出目录不存在，必要时提前删除避免报错。"
+date: 2024/10/22 00:00:00
 ---
 
 # Spark快速大数据分析——Spark的Hadoop配置（叁）
