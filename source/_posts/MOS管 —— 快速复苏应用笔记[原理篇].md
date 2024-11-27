@@ -5,6 +5,7 @@ categories:
 tags:
   - MOSFET
 excerpt: "此篇内容为MOS管的开篇内容，助你从结构上理解和使用MOS管。"
+date: 2024/10/21 00:00:00
 ---
 
 # MOS管 —— 快速复苏应用笔记[原理篇]

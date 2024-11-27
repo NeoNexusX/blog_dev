@@ -7,7 +7,7 @@ tags:
   - SQLlite
   - Room
 excerpt: "优雅的使用ViewBinding开发 "
-
+date: 2024/10/22 00:00:00
 ---
 
 # Android开发笔记——快速入门（优雅的使用ViewBinding开发）

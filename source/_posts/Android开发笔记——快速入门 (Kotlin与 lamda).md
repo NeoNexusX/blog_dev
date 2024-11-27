@@ -7,6 +7,7 @@ tags:
   -  Android
   -  Kotlin
 excerpt: "Kotlin入门；Kotlin与lambda，list set map 闭包"
+date: 2024/10/22 00:00:00
 ---
 
 # Android开发笔记——快速入门（Kotlin与lambda）

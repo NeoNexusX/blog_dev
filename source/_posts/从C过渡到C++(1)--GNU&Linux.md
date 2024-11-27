@@ -6,7 +6,7 @@ tags:
   - GNU
   - C/C++
   - Linux
-
+date: 2024/09/28 00:00:00
 ---
 
 # 从C过渡到C++(1)——GNU/Linux

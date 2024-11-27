@@ -5,7 +5,7 @@ categories:
 tags:
   - Bionet
   - ops
-date: 2024/9/29 22:22:00
+date: "2024/09/21 20:46:25"
 ---
 
 # BionetServer-No1使用说明-进阶（Docker方式）
@@ -14,12 +14,14 @@ date: 2024/9/29 22:22:00
 
 <img src="https://s2.loli.net/2023/09/18/zXu5EpoCmKH8FiJ.jpg" alt="标准监督" style="zoom: 50%;" />
 
-Version:1.0
+Version:1.2
 
-基础篇更新记录：
+Docker篇更新记录：
 
-- 简化了文档的内容，拆分了文档分为入门和进阶使用，Docker版本添加R的使用，删除了Matlab版本的内容，请使用桌面版本。
-- 更新了R语言的存储配置，用户无需关心是如何实现的，直接就可以与主机和NAS相连。避免了以前繁琐的配置。
+- 解决了nohup在python缓冲区机制下print不输出的问题。By 戴珏泓
+- 添加了关于RStudio账户密码的问题。
+- 添加了关于存储配置使用的指南。
+- 修改了关于R部分的存储配置的使用，现在不需要配置路径，直接就可以使用。
 
 
 Date: 2024.10.23
@@ -193,13 +195,44 @@ portainer部署在No1服务器上，portainer是用来管理所有docker的管�
 
 `type=bind,   source=/home/SoftWares/R_Share    ,    target=/home/R_Share,readonly \`指的是将主机：`/home/SoftWares/P_Share`目录内容绑定到容器的`/home/R_Share`路径，注意这里的sorce指的是你的服务器本机端、target指的是容器端。
 
-这样这部分就可以互相共享文件，readonly指的是权限为可读，这样的设置当然是为防止你使用某一个数据集的时候有别人来篡改数据，这样你也无法完全知晓跑出来的结果。
+这样这部分就可以互相共享文件，readonly指的是权限为可读，这样的设置当然是为防止你使用某一个数据集的时候有别人来篡改数据，造成你完全无法知晓跑出来的结果。
+
+**同时因为容器是以root权限来运行的，如果不使用readonly来限制很有可能你一条rm命令将大家的数据都删除了，这将造成无法挽回的后果。**
 
 `type=bind,   source=修改这里/Share_Space,      target=/container/path/Share_Space \`
 
 就没有只读权限这样的担忧，因为这个主机端的文件夹只有你能访问，这个文件需要你修改`修改这里`这四个字改成你的个人home目录：'/home/Neo/Share_Space '举个例子：
 
 <img src="https://s2.loli.net/2024/04/01/4yWVJQOmj82FDXL.png" alt="image-20240401120000975" style="zoom:80%;" />
+
+##### 存储配置的最佳实践
+
+下图展示了存储配置的最佳实践，需要结合**NAS使用指南**和当前讲解来理解：
+
+```mermaid
+graph LR;
+    A["容器(最高权限)"] 
+    B["服务器主机A"]
+    F["服务器主机B(待建设)"]
+    C["NAS(网络附加存储)"]
+    D["你的本地电脑"]
+    E["外部网盘"]
+    
+    
+    A--"Datasets文件夹依赖于"--->C
+    A--"运行依赖于"--->B
+    A--"运行依赖于"--->F
+    B--"Datasets文件夹依赖于"--->C
+    F--"Datasets文件夹依赖于"--->C
+    A--"NCZone、R_Share、P_Share文件夹直接存在于"--->B
+    D =="Bionet(Datasets)文件夹依赖于"==>C
+    D--"连接运行"--->A
+    E--"数据"-->D
+```
+
+红色的路径为推荐的上传数据集的方式：详见NAS使用说明。
+
+<img src="https://s2.loli.net/2024/10/21/mZun6qNW3tvPTKB.png" alt="image-20241021232145477" style="zoom:80%;" />
 
 当你明白上述目录之后我们来填写上图中的内容，我已经简单写了一份出来，你只要复制其中的路径即可，不要搞错了主机和容器的区别。
 
@@ -686,6 +719,8 @@ kill -9 10970 11173
 
 注意事项：
 
+**初始密码为账户名+123**。登陆后请尽快修改密码，以防被攻击。否则后果自负。
+
 登录R语言对应的版本的端口即可，需要注意的是，**同时间之可以登录一个版本，切换另一个版本，请先退出此版本登录，再次登陆即可，或者使用两个不同的浏览器，同一个浏览器开启隐私模式也可以**：
 
 <img src="https://s2.loli.net/2024/05/26/LHMhGuwoDRCaWYZ.png" alt="image-20240526145213656" style="zoom:67%;" />
@@ -701,13 +736,87 @@ kill -9 10970 11173
 - 8787 --> 4.3.2
 - 10088 --> 4.2.2
 
-#### R的路径共享
+#### R的文件共享
 
-host文件夹连接了主机的home文件夹。
+<img src="https://s2.loli.net/2024/10/23/JtnciVDZ435kx8O.png" alt="image-20241023230045769" style="zoom:67%;" />
+
+host文件夹连接了主**机的你个人的home文件夹**。
+
+<img src="https://s2.loli.net/2024/10/23/QcDnkq6fMvNZJW1.png" alt="image-20241023233507171" style="zoom:67%;" />
+
+假设你主机上在你的
+
+```bash
+/home/用户名/A（也就是～）
+```
+
+文件夹下有文件A，你在R studio中调用的时候就是：
+
+```bash
+/home/Neo/host/A
+```
+
+简单来说就是将主机下：
+
+```bash
+/home/用户名
+```
+
+映射到了
+
+```bash
+/home/Neo/host/
+```
+
+**所有在主机上路径为`/home/用户名/`应替换为`/home/Neo/host/`。**
 
 Datasets文件夹连接了NAS的数据中心，与主机上/home/Datasets文件夹是同一个文件夹。
 
-<img src="https://s2.loli.net/2024/10/23/JtnciVDZ435kx8O.png" alt="image-20241023230045769" style="zoom:67%;" />
+假设你在主机上NAS数据中心路径是这样的：
+
+```bash
+/home/Datasets/bionet/Dataset/A
+```
+
+那么在R studio中，应该是：
+
+```bash
+/home/个人用户名/Datasets/bionet/Dataset/A
+```
+
+简单来讲明就是我们将主机上：
+
+```bash
+/home/Datasets 
+```
+
+映射到了：
+
+```bash
+/home/个人用户名/Datasets
+```
+
+所有路径`/home/Datasets/应替换为`/home/个人用户名/Datasets`。
+
+我们举个例子：
+
+假设你上传了数据到了此路经下：
+
+<img src="https://s2.loli.net/2024/11/27/1xn5UVXD3p9NWH6.png" alt="image-20241127102259316" style="zoom:67%;" />
+
+<img src="https://s2.loli.net/2024/11/27/eDyZOpgkLwXjKIn.png" alt="image-20241127102246110" style="zoom:80%;" />
+
+想要在R中引用，那么我们可以在R中看到这样的：
+
+<img src="https://s2.loli.net/2024/11/27/Em8BXquW9CUv5Td.png" alt="image-20241127102355410" style="zoom:67%;" />
+
+那么在R_Studio中，代码调用的路径应该是：
+
+```bash
+/home/个人用户名/Datasets/bionet/Dataset/gl_XU
+```
+
+
 
 ## Q&A：
 
@@ -811,6 +920,8 @@ drwxrwxr-- 2 1001 1000 4.0K Jun  7 09:13 TEST
 
 我们需要将这个命令和nohup来结合实现运行不掉线：
 
+同见问题五正确更新
+
 按方向键盘的上键可以找到上一次运行的命令，当然运行之前要确认当前目录在哪里，是不是你想要的目录？
 
 ```bash
@@ -877,3 +988,49 @@ f.后面一路点击确定便可。
 在除了C盘以外的文件夹新建config文件（空的就可以），在romote-SSH插件的扩展设置中，修改config文件的路径。
 
 ![image-20240326115205575](https://s2.loli.net/2024/03/27/xgGATnRrw852BNW.png)
+
+### 问题五 Python脚本使用nohup运行时，指定文件没有输出内容
+
+**此问题由戴珏泓发现**
+
+实际上为Python的缓存机制带来的问题，log存在缓存区中没有及时更新：
+
+可以看到运行之后没有对应的输出;
+
+<img src="https://s2.loli.net/2024/10/21/OfvYEPxVqanH67c.png" alt="image-20241021235853305" style="zoom:67%;" />
+
+解决方法：
+
+cd进入脚本所在目录执行nohup命令，在命令的python路径与脚本路径之间加-u，强制输出不通过缓存直接打印
+
+例如：
+
+```shell
+nohup /opt/conda/bin/python /home/Share_Space/metrics_ml/GA_xgboost.py 2>&1  &
+```
+
+改为：
+
+```shell
+nohup /opt/conda/bin/python -u /home/Share_Space/metrics_ml/GA_xgboost.py 2>&1  &
+```
+
+### 问题六 R_studio打开之后没有见对应这两个文件夹
+
+如打开之后没有见到这两个文件夹可以打开命令行使用如下命令：
+
+![image-20241023232258889](https://s2.loli.net/2024/10/23/gHJXbLxNn9UBS4d.png)
+
+使用命令：
+
+user1需要替换的你的用户名，比如我的是Neo
+
+```bash
+# 创建从 /home/user1/host 到 /home/host/R_Share/user1 的软链接
+ln -s /home/host/R_Share/user1 /home/user1/host
+
+# 创建从 /home/user1/Datasets 到 /home/host/Datasets 的软链接
+ln -s /home/host/Datasets /home/user1/Datasets
+```
+
+<img src="https://s2.loli.net/2024/10/23/JjGr1sMXhbpDVWQ.png" alt="image-20241023232512786" style="zoom:67%;" />

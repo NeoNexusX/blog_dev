@@ -5,6 +5,7 @@ categories:
 tags:
   - Android
 excerpt: "系统架构和Android Studio安装"
+date: 2024/10/22 00:00:00
 ---
 
 # Android开发笔记——快速入门（系统架构和Android Studio安装）

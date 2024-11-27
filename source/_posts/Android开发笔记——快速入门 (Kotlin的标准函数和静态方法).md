@@ -6,6 +6,7 @@ tags:
   - Android
   - Kotlin
 excerpt: "Kotlin的延迟初始化与Viewbinding、密封类"
+date: 2024/10/22 00:00:00
 ---
 
 # Android开发笔记——快速入门（Kotlin的标准函数和静态方法）

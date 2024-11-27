@@ -5,6 +5,7 @@ categories:
 tags:
   - Pytorch
 excerpt: "介绍了使用PyTorch进行深度学习的基础知识和操作，包括Python编程技巧、DataFrame数据处理、数据加载与批处理、数据集类的构建及其通过Dataloader类的并行加载和操作"
+date: 2024/09/28 00:00:00
 ---
 
 # Pytorch ——基础指北_伍

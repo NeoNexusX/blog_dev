@@ -5,6 +5,7 @@ categories:
 tags:
   - Pytorch
 excerpt: "要讲解了如何使用PyTorch加载和处理MNIST数据集，通过torchvision.datasets下载数据，并使用transforms.ToTensor()进行维度转换，将图像格式从[H, W, C]变为[C, H, W]，以便模型处理，文章深入解析了PyTorch中的维度变换原理，特别是通过permute()函数实现多维矩阵的轴变换，展示了从不同视角理解和描述数据的方式"
+date: 2024/09/28 00:00:00
 ---
 
 # Pytorch ——基础指北_陆

@@ -5,6 +5,7 @@ categories:
 tags:
   - Pytorch
 excerpt: "Python面向对象编程通过类定义、`self`引用、实例化对象、访问属性和方法、继承与方法重写，以及内置方法如`__init__`和`__call__`等实现对象的创建与行为。"
+date: 2024/09/28 00:00:00
 ---
 
 # Pytorch ——基础指北_肆

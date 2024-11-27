@@ -5,8 +5,10 @@ categories:
 tags:
   - Bionet
   - NAS
-date: 2024/9/29 22:22:00
+date: "2024/09/29 20:46:25"
 ---
+
+
 
 # NAS服务器使用说明
 
@@ -135,3 +137,101 @@ ftp://10.26.58.111
 <img src="https://s2.loli.net/2024/04/23/ZcW8fD2J1u6gib5.png" alt="image-20240423205229731" style="zoom:80%;" />
 
 <img src="https://s2.loli.net/2024/04/23/BARezykG3fYimQ2.png" alt="image-20240423205433620" style="zoom:80%;" />
+
+## 最佳实践
+
+### 一些基础知识
+
+下图展示了存储配置的全部架构：
+
+```mermaid
+graph LR;
+    A["容器(最高权限)"] 
+    B["服务器主机A"]
+    F["服务器主机B(待建设)"]
+    C["NAS(网络附加存储)"]
+    D["你的本地电脑"]
+    E["外部网盘"]
+    
+    
+    A--"Datasets文件夹依赖于"--->C
+    A--"运行依赖于"--->B
+    A--"运行依赖于"--->F
+    B--"Datasets文件夹依赖于"--->C
+    F--"Datasets文件夹依赖于"--->C
+    A--"NCZone、R_Share、P_Share文件夹直接存在于"--->B
+    D =="Bionet(Datasets)文件夹依赖于"==>C
+    D--"连接运行"--->A
+    E--"数据"-->D
+   
+```
+
+在这里再次对主机（服务器主机）上存在的文件解释一下：
+
+主机上的文件存储由这样的硬盘空间组成的,分为高速、中速、低速区。顾名思义，每个区域速度不同，速度不同的同时稳定性也存在一定的差异，稳定性和速度正好相反：
+
+`Data_NAS(Datasets) > Samsung 860evo 512G  > GLOWAY YCQ4TNVMe-M.2` 
+
+其中每一条格式如下：[分区名、挂载路径、分区大小]
+
+```mermaid
+graph TB;
+  subgraph HighSpeed
+  nvme0n1("nvme0n1:GLOWAY YCQ4TNVMe-M.2")
+  nvme0n1 --> nvme0n1p1("nvme0n1p1,[/home],2.5T")
+  nvme0n1 --> nvme0n1p2("nvme0n1p2,[/],1T")
+  nvme0n1 --> nvme0n1p3("nvme0n1p3,[swap],256G")
+  nvme0n1 --> nvme0n1p4("nvme0n1p4,[/var],128G")
+  nvme0n1 --> nvme0n1p5("nvme0n1p5,[/opt],128G")
+  nvme0n1 --> nvme0n1p6("nvme0n1p6,[/tmp],50G")
+  end
+  HighSpeed --> MiddleSpeed
+  subgraph MiddleSpeed
+  sda("sda:Samsung 860evo 512G")
+  sda --> sda1["sda1,[/boot/efi],500MB"]
+  sda --> sda2["sda2,[/boot],1GB"]
+  sda --> empty["docker lvm[/var/lib/docker] 400G"]
+  end
+  MiddleSpeed --> LowSpeed
+  subgraph LowSpeed
+  NAS --> NFS1(NFS,/home/Data_NAS,16T)
+  NAS --> NFS2(NFS,/home/Datasets,16T)
+  end
+```
+
+这其中包含了共享文件夹和用户文件夹，如图共享文件夹使用红框标注，用来传递文件
+
+![image-20240513230049068](https://s2.loli.net/2024/05/13/hMrBjZOIpcC5Fgv.png)
+
+一共包含五个文件夹：
+
+- Datasets文件夹是用来放置公用数据集的，其命名需要遵循以下方式：`上传者_数据集名称_上传日期`。
+  - 此文件夹使用详见：[NAS服务器使用说明](http://10.26.58.109/2024/09/29/NAS%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/)
+- Data_NAS是直接连接到NAS的文件夹，其目录内容与Datasets保持一致，但是二者物理通道不同（挂载在不同的IP），使用起来是一模一样的。
+- PastData文件夹是过去硬盘中的所有数据，在三个月后将会自动删除，各位及时使用。【现在已经删除】
+- NCZone文件夹是没有做任何保护的文件夹，用户随时可写可删除，使用的时候需要小心删除，并避免写冲突问题（多人对同一个文件修改），其不被多个服务器所共享，**只保存在No1或者No2服务器上**。
+- Some_scripts文件夹使用分享一个shell脚本的，用来管理系统方便的，使用需要管理员权限。
+
+- SoftWares文件夹比较特殊：
+
+![image-20240401205431946](https://s2.loli.net/2024/04/01/dXxH8ARVvPUEf6r.png)
+
+里面包含了P_Share和R_Share,分别挂载到了对应的容器用来分享文件，容器使用的时候只可读，部分情况下可以写入，如果报错则说明无法写入（处于权限和安全考虑这样设置的），需要通过桌面用户来写入文件。
+
+P代指python容器，R代指R语言容器的存储空间。
+
+### 最佳实践
+
+简化后的路径当中红色的路径为推荐的上传数据集的方式：
+
+<img src="https://s2.loli.net/2024/10/21/mZun6qNW3tvPTKB.png" alt="image-20241021232145477" style="zoom:80%;" />
+
+代码等数据集合比较小的可以直接上传：
+
+![image-20241021234950722](https://s2.loli.net/2024/10/21/y6vCgVmNFjOHD4T.png)
+
+对于R容器，建议直接使用R_Share或者NCZone,可以考虑如下路径：
+
+![image-20241021235340468](https://s2.loli.net/2024/10/21/naqj2KiNpMvyzoP.png)
+
+Matlab使用路径同其他。

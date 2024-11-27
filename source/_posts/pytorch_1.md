@@ -5,6 +5,7 @@ categories:
 tags:
   - Pytorch
 excerpt: "这是一篇介绍 PyTorch 基础操作、张量使用及 Python 切片的学习笔记。"
+date: 2024/09/28 00:00:00
 ---
 
 # Pytorch——基础指北_壹

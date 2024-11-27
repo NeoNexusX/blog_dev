@@ -5,6 +5,7 @@ categories:
 tags:
   - Pytorch
 excerpt: "使用线性网络实现数字识别"
+date: 2024/09/28 00:00:00
 ---
 
 # Pytorch ——基础指北_柒（使用线性网络实现数字识别）

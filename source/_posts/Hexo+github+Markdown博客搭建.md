@@ -6,6 +6,7 @@ tags:
   - Bionet
   - blog
   - hexo
+date: "2024/09/21 20:46:25"
 ---
 
 # Hexo+github+Markdown博客搭建
@@ -349,7 +350,9 @@ pug后缀代表着对应的模板语言，我们需要在对应的地方插入�
     script(src=`https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js` onload="initMermaid()")
     script.
       function initMermaid() {
+       console.log("fuck you");
         if (window.mermaid) {
+          console.log("fuck you");
           mermaid.initialize({ theme: 'forest' });
         }
       }
@@ -436,7 +439,7 @@ cd /etc/nginx/sites-available/
 
 在这里我们修改default文件：
 
-```bash
+```clike
 server {
         listen 80 default_server;
         listen [::]:80 default_server;
@@ -478,7 +481,7 @@ sudo systemctl restart nginx
 ```yml
 deploy:
   - type: git
-    repository: 你的git仓库
+    repository: git@github.com:NeoNexusX/NeoNexusX.github.io.git
     branch: main
   - type: rsync
     host: 你的服务器ip
@@ -488,6 +491,7 @@ deploy:
     delete: true
     verbose: true
     ignore_errors: false
+  
 ```
 
 然后使用命令：
