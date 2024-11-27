@@ -738,7 +738,11 @@ kill -9 10970 11173
 
 #### R的文件共享
 
+R的工作目录默认下应该能看到如下内容：
+
 <img src="https://s2.loli.net/2024/10/23/JtnciVDZ435kx8O.png" alt="image-20241023230045769" style="zoom:67%;" />
+
+**如果和上图不一致请转问题六**。
 
 host文件夹连接了主**机的你个人的home文件夹**。
 
@@ -997,7 +1001,7 @@ f.后面一路点击确定便可。
 
 可以看到运行之后没有对应的输出;
 
-<img src="https://s2.loli.net/2024/10/21/OfvYEPxVqanH67c.png" alt="image-20241021235853305" style="zoom:67%;" />
+<img src="https://s2.loli.net/2024/10/21/OfvYEPxVqanH67c.png" alt="image-20241021235853305" style="zoom: 80%;" />
 
 解决方法：
 
@@ -1017,13 +1021,27 @@ nohup /opt/conda/bin/python -u /home/Share_Space/metrics_ml/GA_xgboost.py 2>&1  
 
 ### 问题六 R_studio打开之后没有见对应这两个文件夹
 
-如打开之后没有见到这两个文件夹可以打开命令行使用如下命令：
+如打开之后没有见到这两个文件夹，可以先将默认目录设置到~
+
+使用命令：
+
+```R
+setwd("~")
+```
+
+效果如图：
+
+![image-20241127114234957](https://s2.loli.net/2024/11/27/ZcEwh3GUDMXkOKj.png)
+
+然后刷新一下页面，一定要刷新一下。然后结果：应该是这样：
+
+![image-20241127114538542](https://s2.loli.net/2024/11/27/MLvFi62cVBoDnwu.png)
+
+如果还不行，可以打开命令行使用如下命令：
 
 ![image-20241023232258889](https://s2.loli.net/2024/10/23/gHJXbLxNn9UBS4d.png)
 
 使用命令：
-
-user1需要替换的你的用户名，比如我的是Neo
 
 ```bash
 # 创建从 /home/user1/host 到 /home/host/R_Share/user1 的软链接
@@ -1032,5 +1050,7 @@ ln -s /home/host/R_Share/user1 /home/user1/host
 # 创建从 /home/user1/Datasets 到 /home/host/Datasets 的软链接
 ln -s /home/host/Datasets /home/user1/Datasets
 ```
+
+user1需要替换的你的用户名，比如我的是Neo：
 
 <img src="https://s2.loli.net/2024/10/23/JjGr1sMXhbpDVWQ.png" alt="image-20241023232512786" style="zoom:67%;" />
