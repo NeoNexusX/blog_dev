@@ -14,19 +14,19 @@ date: "2024/09/21 20:46:25"
 
 <img src="https://s2.loli.net/2023/09/18/zXu5EpoCmKH8FiJ.jpg" alt="标准监督" style="zoom: 50%;" />
 
-Version:1.2
+Version:1.3
 
 Docker篇更新记录：
 
-- 解决了nohup在python缓冲区机制下print不输出的问题。By 戴珏泓
-- 添加了关于RStudio账户密码的问题。
-- 添加了关于存储配置使用的指南。
-- 修改了关于R部分的存储配置的使用，现在不需要配置路径，直接就可以使用。
+- 添加了常见错误解决方案
+- 添加了复制容器使用说明
+- 修改了镜像使用指南
+- 删除了R部分内容，将在下一个版本重构R说明
 
 
-Date: 2024.10.23
+Date: 2025.9.24
 
-Authors：NeoNeuxs
+Authors：魏持之，NeoNexus
 
 <!-- toc -->
 
@@ -36,15 +36,15 @@ Authors：NeoNeuxs
 
 ## 开发的最佳实践
 
-开发的最佳实践基于docker来实现，使用docker已经成为世界上最流行最重要的开发模式，学习如何使用docker来进行开发，不管你走到哪里，是科研还是进入大厂，这一套开发方式的部署会让你受益无穷。下面将简单介绍一些基础概念，由于篇幅限制，介绍的不是很详细，但能帮你有一个初步的了解。
+开发的最佳实践基于Docker来实现，使用Docker已经成为世界上最重要和流行的开发模式，学习如何使用Docker来进行开发，不管你走到哪里，是科研还是进入互联网大厂，这一套开发方式的部署会让你受益无穷。下面将简单介绍一些基础概念，由于篇幅限制，介绍的不是很详细，但能帮你有一个初步的了解。
 
 **使用Docker的优势：**
 
-- **便于管理者管理环境**
-- **快速在多台部署有Docker基础环境的机器上运行，可以在不同的机器中迁移运行，无需重复部署开发环境。**
+- **便于使用者管理环境**
+- **快速在多台部署有Docker基础环境的机器上运行对应程序，可以在不同的机器中迁移运行，无需重复调整开发环境。**
 - **支持集群部署**
 - **root权限**
-- **高性能的虚拟，容器部署30s内即可完成**
+- **高性能，容器部署30s内即可完成**
 
 **第一次查看此文档建议按照顺序看，第一创建成功之后建议使用模板方法快速创建。**
 
@@ -52,13 +52,13 @@ Authors：NeoNeuxs
 
 下图展示了Docker的基本运行原理，其运行在一个基本的操作系统上，并在一个Docker支持多个运行的基本环境。
 
-<img src="https://s2.loli.net/2024/01/25/TCh1nqvuyWL6Kp3.png" alt="282c3hci" style="zoom: 67%;" />
+<img src="https://s2.loli.net/2024/01/25/TCh1nqvuyWL6Kp3.png" alt="282c3hci" style="zoom: 50%;" />
 
 下图展示了传统的VM（虚拟机）架构，是运行在硬件的抽象层之上的，并且每一个虚拟机都有一个操作系统的支持，就是对应的Guest Operating System。
 
-<img src="https://s2.loli.net/2024/01/26/qgLmakBI7VMjoS8.png" alt="7d2mwnd9" style="zoom: 67%;" />
+<img src="https://s2.loli.net/2024/01/26/qgLmakBI7VMjoS8.png" alt="7d2mwnd9" style="zoom: 50%;" />
 
-开发的最佳实践主要是在于使用docker来进行环境的配置和使用。
+开发的最佳实践主要是在于使用Docker来进行环境的配置和使用。
 
 ### image（镜像）和container（容器）的关系
 
@@ -85,7 +85,7 @@ graph TD;
 
 ```
 
-简单理解了容器和镜像的关系，我们可以尝试安装docker并在docker部署一个应用，这个应用可以是很多种类型，比如：部署一个Rstudio或者部署一个可以使用显卡的运行环境（依赖环境也是一种应用）。
+简单理解了容器和镜像的关系，我们可以尝试安装Docker并在Docker部署一个应用，这个应用可以是很多种类型，比如：部署一个可以使用显卡的运行环境（依赖环境也是一种应用）。
 
 ### Docker本身的安装
 
@@ -93,13 +93,15 @@ graph TD;
 
 ### 通过portainer构建自己的容器
 
-portainer部署在No1服务器上，portainer是用来管理所有docker的管理软件，同时也部署在docker之上，使用portainer来创建容器的目的是减少命令的输入，方便用户使用，降低docker的使用门槛，图形化的管理界面也比较直观的展现了所有容器的信息，减少创建过程的问题，同时Portainer具有服务器集群管理，节点拓展等功能，为以后实验室服务建设添砖加瓦。
+portainer部署在No1服务器上，**portainer是用来管理所有Docker的管理软件**，同时也部署在Docker之上，使用portainer来创建容器的目的是减少命令的输入，方便用户使用，降低Docker的使用门槛，图形化的管理界面也比较直观的展现了所有容器的信息，减少创建过程的问题，同时Portainer具有服务器集群管理，节点拓展等功能，为以后实验室服务建设添砖加瓦。
 
 首先登录你的[Portainer](https://10.26.58.61:9443/#!/auth)
 
 每个人的账户已经创建好了，需要登陆密码私聊我即可。
 
 目前被部署在：https://10.26.58.61:9443/
+
+使用zerotier的时候地址为：https://10.11.12.166:9443/
 
 **注意端口号为9443**
 
@@ -119,19 +121,21 @@ portainer部署在No1服务器上，portainer是用来管理所有docker的管�
 
 <img src="https://s2.loli.net/2024/03/31/i2UTrdaMQuIoWR1.png" alt="image-20240331233820435" style="zoom:80%;" />
 
-对于使用者来说，右侧的状态栏我们只关心这四个内容，Containers、Images、NetWorks、Volumes，下边将简单介绍一下这四个内容并在介绍的同时创建一个属于你自己的世界（容器）。
+对于使用者来说，右侧的状态栏我们只关心这四个内容，Containers、Images、Networks、Volumes，下边将简单介绍一下这四个内容并在介绍的同时创建一个属于你自己的世界（容器）。
 
 #### Images（镜像）
 
-我们先来看一下Images页面，images实际上就是镜像，镜像是一个已经制作好的某一个容器的copy，这个镜像在制作完之后和使用之前是无法更改的，也就是说镜像实际上就是某一套环境的固化版本、无法修改当中的内容，只能使用当中的内容。
+我们先来看一下Images页面，Images中文名称就是镜像，镜像在制作完之后和使用之前是无法更改的，也就是说镜像实际上就是某一套环境的固化版本、无法修改当中的内容，只能使用当中的内容。
 
 <img src="https://s2.loli.net/2024/03/31/UaTbB1pQetZsS6H.png" alt="image-20240331235234493" style="zoom:100%;" />
 
-可以看到我们有一个不太正规命名的pytorch镜像，这是我第一次制作的镜像，至于怎么制作镜像和为什么制作镜像请跳转到这一部分的最后一小节我们会在那里详细介绍，不过我们可以通过一个基本的镜像来详细介绍一下镜像如何使用和创建，我们使用这里最后一个镜像来在nvidia的cudnn运行环境来进行测试。
+可以看到我们有一个不太正规命名的pytorch镜像，这是我第一次制作的镜像，我们可以通过一个基本的镜像来详细介绍一下镜像如何使用和创建，我们使用这里最后一个镜像来在nvidia的cudnn运行环境来进行测试。
 
 #### container（容器）
 
-容器就是镜像运行起来的状态，这时候镜像内容就由上文中不可修改的状态转变为可修改、可运行、可探查的状态，一个镜像包含了一套完整的运行所需依赖，并由一套自己的文件系统来支持运行，也就说容器和本地服务器是隔离开的、是互相不干扰的，是没有任何关系的（其实并不是，也有一定的逃逸方法，建议大家正常使用就不会遇到这些问题），
+**容器就是镜像运行起来的状态**，这时候镜像内容就由上文中不可修改的状态转变为可修改、可运行、可探查的状态，一个镜像包含了一套完整的运行所需依赖，并由一套自己的文件系统来支持运行，也就说容器和本地服务器是隔离开的、是互相不干扰的，是没有任何关系的（其实并不是，也有一定的逃逸方法，建议大家正常使用就不会遇到这些问题）。
+
+以下为从零开始创建一个新容器，**本文也有直接从一个已有容器复制新容器的使用指南**，但是更推荐看完从零开始创建容器并自己动手跟着操作一遍，遇到问题可以随时联系管理人员。
 
 来到container页面：
 
@@ -141,15 +145,13 @@ portainer部署在No1服务器上，portainer是用来管理所有docker的管�
 
 <img src="https://s2.loli.net/2024/04/01/e6PQyo478sNWtnF.png" alt="image-20240401003226298" style="zoom:150%;" />
 
-虽然图片上是Nvidia官方的镜像，不过我们可以再打开**images页面**，看一下有什么镜像，选择你需要的镜像来使用即可，下图第一个是一个bionet实验室制作的镜像，里面包含了基础的miniconda，显卡运行环境，常用的linux工具等等，**下图蓝色部分可以复制名字到刚才的位置**。
+上图中演示的是NVIDIA的官方镜像，我这里也制作了几个适合组内任务的镜像，简单介绍下镜像列表如下，请选用**neonexus开头**的：
 
-![image-20240426230614072](https://s2.loli.net/2024/04/26/cUmjzr1NZ8LFp2E.png)
+![image-20251011170438527](https://s2.loli.net/2025/10/11/5nZ781tSY2TJipM.png)
 
-上图的这个镜像完整安装了pytorch、numpy、pandas等，在base环境下，可以直接使用，属于是开箱即用的水准，没特殊情况推荐这个，拿不准可以来问我。下图是Tensorflow的专用镜像，有专门的介绍，可以跳转到Tensorflow章节。
+这里以**neonexusx/bionet_deeplearning:cuda121_cudnn9_conda_pytorch_devel_v1.1**这个镜像为例，说明一下名字的含义
 
-![image-20240426230533650](https://s2.loli.net/2024/04/26/GKwnTCg31FNaevx.png)
-
-至于选用哪一个请自行参照上文选择。
+neonexusx/bionet代表是Docker hub的仓库所属者，deeplearning代表镜像用途（深度学习），后面的cuda121代表cuda 12.1版本，cudnn9同理，conda代表存在conda虚拟环境，pytorch代表深度学习框架，v1.1是版本号（镜像不定期会更新，可以实时关注下）至于选用哪一个请自行参照上文选择。
 
 设置主机和容器的端口号映射：
 
@@ -157,21 +159,11 @@ portainer部署在No1服务器上，portainer是用来管理所有docker的管�
 
 主机可使用的端口号在10086-10199之间，每个人使用的数量不受限制，只需要选择没有占用的即可，这里我占用的是10086，所以别人也无法使用了，但是如何查看别人用了什么端口号呢,使用相同的端口号会导致创建失败。
 
-容器需要使用的端口完全取决你的应用需要，比如R就需要8787端口就需要将R的端口映射到10086到10199之间任意一个，当你从你的电脑链接的时候只需要选择你当时映射的主机端口号即可，不需要连接的时候选择8787。
+容器需要使用的端口完全取决你的应用需要，比如R Studio就需要8787端口就需要将R的端口（8787）映射到10086到10199之间任意一个，当你从你的电脑链接的时候只需要选择你当时映射的主机端口号即可，不需要连接的时候选择8787。
 
 这里我建议你多留一个端口比如容器的10087来映射到10087来使用，这样万一有服务需要使用端口我们只需要重新映射一下服务即可，就不要再重新创建一个端口来使用了。
 
 ![image-20240401005456274](https://s2.loli.net/2024/04/01/LpzZNdB4kwbmujS.png)
-
-#### 容器可见设置
-
-**这里的设置不能跳过~**
-
-![image-20240401005631022](https://s2.loli.net/2024/04/01/uT37HjOhmNcnAqJ.png)
-
-这里要选择完全，因为要公开使用的端口信息：
-
-![image-20240426190148253](https://s2.loli.net/2024/04/26/3qDMnVuG428Zlaj.png)
 
 #### 容器的配置
 
@@ -201,7 +193,7 @@ portainer部署在No1服务器上，portainer是用来管理所有docker的管�
 
 `type=bind,   source=修改这里/Share_Space,      target=/container/path/Share_Space \`
 
-就没有只读权限这样的担忧，因为这个主机端的文件夹只有你能访问，这个文件需要你修改`修改这里`这四个字改成你的个人home目录：'/home/Neo/Share_Space '举个例子：
+Share_Space目录就没有只读权限这样的担忧，因为这个主机端的文件夹只有你能访问，这个文件需要你修改`修改这里`这四个字改成你的个人home目录：'/home/Neo/Share_Space '举个例子：
 
 <img src="https://s2.loli.net/2024/04/01/4yWVJQOmj82FDXL.png" alt="image-20240401120000975" style="zoom:80%;" />
 
@@ -237,20 +229,17 @@ graph LR;
 当你明白上述目录之后我们来填写上图中的内容，我已经简单写了一份出来，你只要复制其中的路径即可，不要搞错了主机和容器的区别。
 
 ```dockerfile
-host=/home/SoftWares/P_Share		container= /home/P_Share,	readonly 
-host=/home/SoftWares/R_Share		container= /home/R_Share,	readonly 
 host=/home/Datasets			container= /home/Datasets,	readonly 
-host=/home/NCZone				container= /home/NCZone		Writable
 host=/home/Neo/Share_Space		container= /home/Share_Space 	Writable
 ```
 
 **注意这里的host指的是你的服务器本机端、container指的是容器端**，其他的内容按照图片选择即可。
 
-![image-20240403152905264](https://s2.loli.net/2024/04/03/z2ncGWk435IULyq.png)
+![image-20250925235253260](https://s2.loli.net/2025/09/25/yFznm7VK8CXNbQc.png)
 
 使用Tensorflow的同学注意需要将上图container的home替换为tf，如下图所示：
 
-<img src="https://s2.loli.net/2024/06/07/n8V64twEjpBmN1W.png" alt="image-20240607233503172" style="zoom:80%;" />
+![image-20250925235655461](https://s2.loli.net/2025/09/25/7Tsm3VjNaHJuYDz.png)
 
 ##### lable配置
 
@@ -266,7 +255,7 @@ host=/home/Neo/Share_Space		container= /home/Share_Space 	Writable
 
 ![image-20240423222756107](https://s2.loli.net/2024/04/23/ZJtPe1Rhmwj9SV5.png)
 
-shnm大小推荐至少2000MB，最大4000MB，使用的4090成员请在4000MB以上。
+shnm大小推荐至少128000MB，最大256000MB，使用多卡或者datakloader数量较多的程序请在16000MB以上。
 
 此处注意，因为有两组成员共用GPU，请bionet课题组使用如下配置：
 
@@ -304,7 +293,7 @@ Tensorflow环境使用Jupyter来使用，在上述镜像建立完成之后，我
 
 点击镜像名字查看端口信息:
 
-![image-20240426190920611](https://s2.loli.net/2024/04/26/Gm7xojTqlBacEC5.png)
+<img src="https://s2.loli.net/2024/04/26/Gm7xojTqlBacEC5.png" alt="image-20240426190920611" style="zoom:50%;" />
 
 我们这里使用了32768端口来映射Jupyter的8888端口，我们打开浏览器输入：10.26.58.61:32768
 
@@ -321,6 +310,28 @@ Tensorflow环境使用Jupyter来使用，在上述镜像建立完成之后，我
 复制对应的token即可使用，也可以选择下边的修改密码来长久登录。Jupyter自带命令行，所以Portainer的界面的命令行无法使用们这里需要注意。
 
 关于Jupyter的使用这里就不再赘述，下面是pytorch的vscode链接方法。
+
+#### 使用已有容器复制
+
+![image-20250925234121499](https://s2.loli.net/2025/09/25/21IdBygZ6mCXn9b.png)
+
+如图所示，example 是按照上面流程创建的标准容器，通过对标准容器的修改可以可以直接使用别人生成好的容器配置，但需要注意的要修改端口，绑定硬盘路径等参数就可以生成符合你的使用需求的一个新容器。具体操作步骤如下，先点击你想要复制的容器（以example为例，下同）
+
+<img src="https://s2.loli.net/2025/09/25/SNiZ3e7LGQIofM8.png" alt="image-20250925234406623" style="zoom:67%;" />
+
+点击Duplicate/Edit，进入如下界面
+
+<img src="https://s2.loli.net/2025/09/25/KxNbLFPwIjkYevg.png" alt="image-20250925234659012" style="zoom:67%;" />
+
+记得点击
+
+![image-20250925234714104](https://s2.loli.net/2025/09/25/QXBf37IZvei5KW2.png)
+
+来保存容器
+
+之后就会得到一个新的容器了
+
+复制容器的好处是简单快捷，可以根据自己的使用场景微调镜像，但是还是推荐大家去看上面的从零开始创建容器的部分，可以深入的了解每个选项的作用，有问题也可以自己简单修复下。
 
 #### 使用VSCode连接容器
 
@@ -410,7 +421,7 @@ ssh root@10.26.58.61 -p 10086
 
 <img src="https://s2.loli.net/2024/04/01/ymKYnV8FsrICNWA.png" alt="image-20240401163649302" style="zoom:80%;" />
 
-![image-20240401163813111](https://s2.loli.net/2024/04/01/fCKThcgtrZI6Gzd.png)
+<img src="https://s2.loli.net/2024/04/01/fCKThcgtrZI6Gzd.png" alt="image-20240401163813111" style="zoom:67%;" />
 
 一般工作在home文件夹下：
 
@@ -494,89 +505,23 @@ if __name__ == '__main__':
     main()
 ```
 
-新建之后会有右下角来提示安装对应的语言插件，没提示直接搜索也可以：
+新建之后会有右下角来提示安装对应的语言插件：
 
 <img src="https://s2.loli.net/2024/04/01/vknM61ilJ5fAdRL.png" alt="image-20240401164200647" style="zoom:80%;" />
 
-在插件市场搜索：
+没提示直接搜索也可以，在插件市场搜索：
 
 ```txt
 @id:ms-python.python
 ```
 
+同时还需要pylance，作为语法检查。
+
 <img src="https://s2.loli.net/2024/04/01/sbQwhgcJBERYHxm.png" alt="image-20240401164247045" style="zoom:80%;" />
 
+<img src="https://s2.loli.net/2025/10/04/8gZmpbacAX6Hxkt.png" alt="image-20251004234609532" style="zoom: 67%;" />
+
 然后点击安装在远程即可。
-
-#### 开启免密码登录
-
-开启免密码登录方式如下：
-
-首先打开你的ssh配置文件：
-
-<img src="https://s2.loli.net/2024/04/03/dgPwOnKMThcuGAq.png" alt="image-20240403170216864" style="zoom:67%;" />
-
-打开之后我们先放这里，等下再用。我们把这个路径叫做SSH配置路径，一定要记住这个路径，可以截图。
-
-我们在windos文件管理器中打开这个文件夹：
-
-<img src="https://s2.loli.net/2024/04/03/v9sV2CIUkceziL1.png" alt="image-20240403170412513" style="zoom:80%;" />
-
-这里分为两种情况，一种是你已经有了上述`id_rsa.pub`文件，如上图红框所示。
-
-另一种情况是没有这个文件，如下所示：
-
-<img src="https://s2.loli.net/2024/04/03/z48qTZJ75yNMaoL.png" alt="29c9f2a1ef1c58e7deeae3ac742c00f" style="zoom:80%;" />
-
-如果你没有，我们打开本地的系统命令行：
-
-<img src="https://s2.loli.net/2024/04/03/KenW8bEy1gwz9UI.png" alt="image-20240403170517802" style="zoom:80%;" />
-
-输入以下内容：
-
-```bash
-ssh-keygen
-```
-
-<img src="https://s2.loli.net/2024/04/03/ivOr8YQgDAbcLq2.png" alt="image-20240403170800926" style="zoom:80%;" />
-
-这里会提示让你输入密钥文件保存在哪里，这里就要放在你刚才的那个路径的文件下面，就是在vscode设置中打开的路径。记住是文件夹，不是文件，文件夹通常名字为：".ssh"。
-
-输入之后一路回车下去直到看到这个图形生成：
-
-<img src="https://s2.loli.net/2024/04/03/WmeMaujYiO9Ix6G.png" alt="image-20240403171025319" style="zoom:67%;" />
-
-这里就结束了，然后我们回过头打开这个文件，使用vscode或者记事本都可以，同时我们也打开远程服务器的这个目录下的文件：
-
-这路径全名是：
-
-```bash
-/root/.ssh/authorized_keys
-```
-
-<img src="https://s2.loli.net/2024/04/03/fHrEOVRzybCqh3W.png" alt="image-20240403171155723" style="zoom:67%;" />
-
-打开之后我们将刚才打开的`id_rsa.pub`文件中的内容复制过来，通常如下图所示：
-
-<img src="https://s2.loli.net/2024/04/03/xXeDynObsMYK9Ez.png" alt="image-20240403171427044" style="zoom:80%;" />
-
-然后我们回到最初打开的ssh配置文件，在你的电脑SSH配置路径上，如果没打开的话，我们还是点击这里打开：
-
-![image-20240403171545385](https://s2.loli.net/2024/04/03/6TcAB2P7SVDQUuC.png)
-
-添加一行内容：
-
-```bash
-IdentityFile "C:\Users\NeoNexus\.ssh\id_rsa"  这里的路径要修改成你的配置路径，要记得这里的id_rsa文件并不带pub后缀因为这是私钥
-```
-
-添加后效果如下：
-
-![image-20240403171709698](https://s2.loli.net/2024/04/03/sVCgWRw4FJBLZtj.png)
-
-记得Ctrl+S保存修改
-
-重启VSCode就可以愉快免密码直接使用了。
 
 #### 开启代码补全
 
@@ -715,342 +660,74 @@ kill -9 10970 11173
 
 瞬间清净了~
 
-## R语言连接办法
 
-注意事项：
 
-**初始密码为账户名+123**。登陆后请尽快修改密码，以防被攻击。否则后果自负。
+#### 开启免密码登录【可选】
 
-登录R语言对应的版本的端口即可，需要注意的是，**同时间之可以登录一个版本，切换另一个版本，请先退出此版本登录，再次登陆即可，或者使用两个不同的浏览器，同一个浏览器开启隐私模式也可以**：
+开启免密码登录方式如下：
 
-<img src="https://s2.loli.net/2024/05/26/LHMhGuwoDRCaWYZ.png" alt="image-20240526145213656" style="zoom:67%;" />
+首先打开你的ssh配置文件：
 
-如图：
+<img src="https://s2.loli.net/2024/04/03/dgPwOnKMThcuGAq.png" alt="image-20240403170216864" style="zoom:67%;" />
 
-![image-20240401202739165](https://s2.loli.net/2024/04/01/1VWdzcjkpoySsJu.png)
+打开之后我们先放这里，等下再用。我们把这个路径叫做SSH配置路径，一定要记住这个路径，可以截图。
 
-![image-20240401202839563](https://s2.loli.net/2024/04/01/EIoPMnjNUqfLZWs.png)
+我们在windos文件管理器中打开这个文件夹：
 
-目前版本对应关系：
+<img src="https://s2.loli.net/2024/04/03/v9sV2CIUkceziL1.png" alt="image-20240403170412513" style="zoom:80%;" />
 
-- 8787 --> 4.3.2
-- 10088 --> 4.2.2
+这里分为两种情况，一种是你已经有了上述`id_rsa.pub`文件，如上图红框所示。
 
-#### R的文件共享
+另一种情况是没有这个文件，如下所示：
 
-R的工作目录默认下应该能看到如下内容：
+<img src="https://s2.loli.net/2024/04/03/z48qTZJ75yNMaoL.png" alt="29c9f2a1ef1c58e7deeae3ac742c00f" style="zoom:80%;" />
 
-<img src="https://s2.loli.net/2024/10/23/JtnciVDZ435kx8O.png" alt="image-20241023230045769" style="zoom:67%;" />
+如果你没有，我们打开本地的系统命令行：
 
-**如果和上图不一致请转问题六**。
+<img src="https://s2.loli.net/2024/04/03/KenW8bEy1gwz9UI.png" alt="image-20240403170517802" style="zoom:80%;" />
 
-host文件夹连接了主**机的你个人的home文件夹**。
-
-<img src="https://s2.loli.net/2024/10/23/QcDnkq6fMvNZJW1.png" alt="image-20241023233507171" style="zoom:67%;" />
-
-假设你主机上在你的
+输入以下内容：
 
 ```bash
-/home/用户名/A（也就是～）
+ssh-keygen
 ```
 
-文件夹下有文件A，你在R studio中调用的时候就是：
+<img src="https://s2.loli.net/2024/04/03/ivOr8YQgDAbcLq2.png" alt="image-20240403170800926" style="zoom:80%;" />
+
+这里会提示让你输入密钥文件保存在哪里，这里就要放在你刚才的那个路径的文件下面，就是在vscode设置中打开的路径。记住是文件夹，不是文件，文件夹通常名字为：".ssh"。
+
+输入之后一路回车下去直到看到这个图形生成：
+
+<img src="https://s2.loli.net/2024/04/03/WmeMaujYiO9Ix6G.png" alt="image-20240403171025319" style="zoom:67%;" />
+
+这里就结束了，然后我们回过头打开这个文件，使用vscode或者记事本都可以，同时我们也打开远程服务器的这个目录下的文件：
+
+这路径全名是：
 
 ```bash
-/home/Neo/host/A
+/root/.ssh/authorized_keys
 ```
 
-简单来说就是将主机下：
+<img src="https://s2.loli.net/2024/04/03/fHrEOVRzybCqh3W.png" alt="image-20240403171155723" style="zoom:67%;" />
+
+打开之后我们将刚才打开的`id_rsa.pub`文件中的内容复制过来，通常如下图所示：
+
+<img src="https://s2.loli.net/2024/04/03/xXeDynObsMYK9Ez.png" alt="image-20240403171427044" style="zoom:80%;" />
+
+然后我们回到最初打开的ssh配置文件，在你的电脑SSH配置路径上，如果没打开的话，我们还是点击这里打开：
+
+![image-20240403171545385](https://s2.loli.net/2024/04/03/6TcAB2P7SVDQUuC.png)
+
+添加一行内容：
 
 ```bash
-/home/用户名
+IdentityFile "C:\Users\NeoNexus\.ssh\id_rsa"  这里的路径要修改成你的配置路径，要记得这里的id_rsa文件并不带pub后缀因为这是私钥
 ```
 
-映射到了
+添加后效果如下：
 
-```bash
-/home/Neo/host/
-```
+![image-20240403171709698](https://s2.loli.net/2024/04/03/sVCgWRw4FJBLZtj.png)
 
-**所有在主机上路径为`/home/用户名/`应替换为`/home/Neo/host/`。**
+记得Ctrl+S保存修改
 
-Datasets文件夹连接了NAS的数据中心，与主机上/home/Datasets文件夹是同一个文件夹。
-
-假设你在主机上NAS数据中心路径是这样的：
-
-```bash
-/home/Datasets/bionet/Dataset/A
-```
-
-那么在R studio中，应该是：
-
-```bash
-/home/个人用户名/Datasets/bionet/Dataset/A
-```
-
-简单来讲明就是我们将主机上：
-
-```bash
-/home/Datasets 
-```
-
-映射到了：
-
-```bash
-/home/个人用户名/Datasets
-```
-
-所有路径`/home/Datasets/应替换为`/home/个人用户名/Datasets`。
-
-我们举个例子：
-
-假设你上传了数据到了此路经下：
-
-<img src="https://s2.loli.net/2024/11/27/1xn5UVXD3p9NWH6.png" alt="image-20241127102259316" style="zoom:67%;" />
-
-<img src="https://s2.loli.net/2024/11/27/eDyZOpgkLwXjKIn.png" alt="image-20241127102246110" style="zoom:80%;" />
-
-想要在R中引用，那么我们可以在R中看到这样的：
-
-<img src="https://s2.loli.net/2024/11/27/Em8BXquW9CUv5Td.png" alt="image-20241127102355410" style="zoom:67%;" />
-
-那么在R_Studio中，代码调用的路径应该是：
-
-```bash
-/home/个人用户名/Datasets/bionet/Dataset/gl_XU
-```
-
-
-
-## Q&A：
-
-### 问题零 通过容器写入的文件无法运行？
-
-容器的用户都是root身份，而UI登陆的是以用户的身份来登陆的，普通用户当然没有权限来操作root的内容，解决办法：
-
-将文件修改成主机所有者，在容器的终端中使用命令
-
-```bash
-sudo chown UID 文件/目录路径
-```
-
-如果要修改某个文件夹的全部文件，可以使用：
-
-```bash
-sudo chown -R UID 文件/目录路径
-```
-
-UID信息在UI界面使用命令获取，比如：
-
-![image-20240607235021091](https://s2.loli.net/2024/06/07/dhEWOpuyINHF6SY.png)
-
-打个比方，修改我在主机上：/Datasets/bionet/Dataset/A/ 文件夹的可以使用：
-
-```bash
-sudo chown -R 1001 /Datasets/bionet/Dataset/A/
-```
-
-这样这个文件夹下所有文件都可以正常使用。
-
-R语言已经实现了UID的同步，所以没有这个问题。
-
-这里放一个在Jupyter中修改权限的的例子：
-
-```bash
-# ls -alh
-total 8.0K
-drwxr-xr-x 2 root root 4.0K Apr 18  2022 .
-drwxr-xr-x 1 root root 4.0K Jun  7 15:51 ..
-# cd /tf 首先要到对应的文件夹下来操作文件
-# ls -alh
-total 6.9M
-drwxrwxrwx  1 root root 4.0K Jun  7 15:51 .
-drwxr-xr-x  1 root root 4.0K Jun  7 15:51 ..
-drwxrwxrwx 11 1001 1002   14 Jun  5 05:03 Datasets
-drwxrwxrwx  6 root root 6.8M May 26 06:23 NCZone
-drwxrwxr--  6 1001 1001 4.0K Jun  7 15:30 Share_Space
-drwxrwxrwx  1 root root 4.0K Sep  2  2023 tensorflow-tutorials
-# cd Share_Space
-# ls -alh
-total 28K
-drwxrwxr-- 6 1001 1001 4.0K Jun  7 15:30 .
-drwxrwxrwx 1 root root 4.0K Jun  7 15:51 ..
-drwx------ 4 root root 4.0K Jun  7 15:30 .Trash-0
-drwxr-xr-x 2 root root 4.0K Jun  7 15:30 .ipynb_checkpoints
-drwxrwxr-- 6 root root 4.0K May  4 11:07 PTM
-drwxrwxr-- 2 1000 1000 4.0K Jun  7 09:13 TEST
--rwxrwxr-- 1 root root 2.2K Apr 23 15:11 test.py
-# pwd
-/tf/Share_Space
-# sudo chown 1001 TEST
-# ls -alh
-total 28K
-drwxrwxr-- 6 1001 1001 4.0K Jun  7 15:30 .
-drwxrwxrwx 1 root root 4.0K Jun  7 15:51 ..
-drwx------ 4 root root 4.0K Jun  7 15:30 .Trash-0
-drwxr-xr-x 2 root root 4.0K Jun  7 15:30 .ipynb_checkpoints
-drwxrwxr-- 6 root root 4.0K May  4 11:07 PTM
-drwxrwxr-- 2 1001 1000 4.0K Jun  7 09:13 TEST
--rwxrwxr-- 1 root root 2.2K Apr 23 15:11 test.py
-```
-
-### 问题一 容器重启之后无法连接？
-
-容器重启之后ssh服务被中断，需要手动重启，打开portainer输入以下命令：
-
-```bash
- service ssh restart
-```
-
-即可重新连接。
-
-![image-20240426194356414](https://s2.loli.net/2024/04/26/uPmNqxek4pWlFCa.png)
-
-
-
-### 问题二 我创建一个docker失败之后再次连接相同端口为什么不行？
-
-因为ssh有校验措施，只能连接到同一台物理设备，当你的设备失效以后就无法使用，删除过去的key即可重新连接：
-
-<img src="https://s2.loli.net/2024/04/01/yJDmalXE2xfwLR6.png" alt="image-20240401160821511" style="zoom:80%;" />
-
-### 问题三 我关闭了VSCode代码就停止运行了？
-
-实际上是这样的，SSH需要保持连接才能运行，不过不要紧我们使用命令来将代码任务注册到后台来持久运行，这样你的代码只需要在默认模式下调整好之后，在再使用如下命令即可保持运行：
-
-当我们运行的代码的时候实际上就是在命令行中调用了命令：
-
-![image-20240401192019401](https://s2.loli.net/2024/04/01/fdlr9SjuFY2qiZx.png)
-
-我们需要将这个命令和nohup来结合实现运行不掉线：
-
-同见问题五正确更新
-
-按方向键盘的上键可以找到上一次运行的命令，当然运行之前要确认当前目录在哪里，是不是你想要的目录？
-
-```bash
-(base) root@77d5769f235a:/# cd /home/Share_Space/                          
-(base) root@77d5769f235a:/home/Share_Space# ls
-data  test.py
-(base) root@77d5769f235a:/home/Share_Space# /opt/conda/bin/python /home/Share_Space/test.py
-```
-
-下面我们来使用nohup将任务保持在后台，格式如下：
-
-```sh
-nohup 你的运行命令 > output.file 2>&1 &
-```
-
-结合上边的命令，效果如下：
-
-```bash
-nohup /opt/conda/bin/python /home/Share_Space/test.py > output.file 2>&1 &
-```
-
-我们来运行一下：
-
-![image-20240401195117010](https://s2.loli.net/2024/04/01/5ui9UFh6DjNaqpd.png)
-
-同时可以看到，这里有了对应的输出文件，输出文件保存了所有输出：
-
-![image-20240401195140188](https://s2.loli.net/2024/04/01/9tsvoN1ZgQEAajJ.png)
-
-<img src="https://s2.loli.net/2024/04/01/5ZuA7HsbzYXVJD3.png" alt="image-20240401195202219" style="zoom: 80%;" />
-
-当然运行完成之后文件显示的更加准确~
-
-### 问题四 Bad owner or permissions on
-
-如果出现**Bad owner or permissions on C:\\Users\\Administrator/.ssh/config > 过程试图写入的管道不存在。 >**的问题，该问题是config文件权限高，vscode不能修改造成的，两种解决办法第一种是修改原来C:盘的config文件权限；第二种是在其他盘新建一个config文件，用于存储远程连接用户，地址等基本信息。
-
-**第一种解决办法**
-
-a.找到.ssh文件夹。它通常位于C:\Users
-
-<img src="https://pic2.zhimg.com/80/v2-00510cb6ff02667327ab74cf045e0475_720w.webp" alt="img" style="zoom:80%;" />
-
-b.右键单击.ssh文件夹，然后单击“属性”，选择“安全”
-
-<img src="https://pic4.zhimg.com/80/v2-403dcc44b073590af68d8350a8d29733_720w.webp" alt="img" style="zoom:80%;" />
-
-c.单击“高级”。 单击“禁用继承”，单击“确定”。 将出现警告弹出窗口。单击“从此对象中删除所有继承的权限”。
-
-d.此时所有用户都将被删除。添加所有者。在同一窗口中，单击“编辑”按钮，单击“添加”以显示“选择用户或组”窗口。
-
-<img src="https://pic1.zhimg.com/80/v2-830693015d51071061ff59f4f57d0220_720w.webp" alt="img" style="zoom: 80%;" />
-
-e.单击“高级”，然后单击“立即查找”按钮。应显示用户结果列表。 选择用户帐户。
-
-<img src="https://pic2.zhimg.com/80/v2-c68f57ffd916d49e56d985c730ccd039_720w.webp" alt="img" style="zoom:80%;" />
-
-f.后面一路点击确定便可。
-
-**记得重启电脑来刷新设置。**
-
-**第二种解决办法**
-
-在除了C盘以外的文件夹新建config文件（空的就可以），在romote-SSH插件的扩展设置中，修改config文件的路径。
-
-![image-20240326115205575](https://s2.loli.net/2024/03/27/xgGATnRrw852BNW.png)
-
-### 问题五 Python脚本使用nohup运行时，指定文件没有输出内容
-
-**此问题由戴珏泓发现**
-
-实际上为Python的缓存机制带来的问题，log存在缓存区中没有及时更新：
-
-可以看到运行之后没有对应的输出;
-
-<img src="https://s2.loli.net/2024/10/21/OfvYEPxVqanH67c.png" alt="image-20241021235853305" style="zoom: 80%;" />
-
-解决方法：
-
-cd进入脚本所在目录执行nohup命令，在命令的python路径与脚本路径之间加-u，强制输出不通过缓存直接打印
-
-例如：
-
-```shell
-nohup /opt/conda/bin/python /home/Share_Space/metrics_ml/GA_xgboost.py 2>&1  &
-```
-
-改为：
-
-```shell
-nohup /opt/conda/bin/python -u /home/Share_Space/metrics_ml/GA_xgboost.py 2>&1  &
-```
-
-### 问题六 R_studio打开之后没有见对应这两个文件夹
-
-如打开之后没有见到这两个文件夹，可以先将默认目录设置到~
-
-使用命令：
-
-```R
-setwd("~")
-```
-
-效果如图：
-
-![image-20241127114234957](https://s2.loli.net/2024/11/27/ZcEwh3GUDMXkOKj.png)
-
-然后刷新一下页面，一定要刷新一下。然后结果：应该是这样：
-
-![image-20241127114538542](https://s2.loli.net/2024/11/27/MLvFi62cVBoDnwu.png)
-
-如果还不行，可以打开命令行使用如下命令：
-
-![image-20241023232258889](https://s2.loli.net/2024/10/23/gHJXbLxNn9UBS4d.png)
-
-使用命令：
-
-```bash
-# 创建从 /home/user1/host 到 /home/host/R_Share/user1 的软链接
-ln -s /home/host/R_Share/user1 /home/user1/host
-
-# 创建从 /home/user1/Datasets 到 /home/host/Datasets 的软链接
-ln -s /home/host/Datasets /home/user1/Datasets
-```
-
-user1需要替换的你的用户名，比如我的是Neo：
-
-<img src="https://s2.loli.net/2024/10/23/JjGr1sMXhbpDVWQ.png" alt="image-20241023232512786" style="zoom:67%;" />
+重启VSCode就可以愉快免密码直接使用了。
