@@ -235,3 +235,43 @@ P代指python容器，R代指R语言容器的存储空间。
 ![image-20241021235340468](https://s2.loli.net/2024/10/21/naqj2KiNpMvyzoP.png)
 
 Matlab使用路径同其他。
+
+## 使用SMB服务访问NAS
+
+由于学校新式vpn软件，不支持校内资源映射等操作（需申请），目前以zerotier临时穿透解决方案，服务器位于大陆地区，通过planet服务器实现点对点连接，带宽无上限，取决于网络连接状况。
+
+ZeroTier 客户端官网：`https://www.zerotier.com/download/`
+
+在群文件找到组内提供的zerotier穿透方案说明文档进行操作并申请授权。
+
+![image-20251013162402396](https://s2.loli.net/2025/10/14/iw6N1A8m5EIgaxT.png)
+
+测试NAS是否连接正常，ping成功后可以正常使用。
+
+![image-20251013162602520](https://s2.loli.net/2025/10/14/tOeEuWoX1zvDyi4.png)
+
+Windows系统下使用SMB协议能够实现高效的本地网络资源访问，借助该方式可以把NAS当做本地磁盘使用，方便运行可执行文件等操作。
+
+![image-20251013214954726](https://s2.loli.net/2025/10/14/lJoUKiCDNVY567A.png)
+
+### 启用SMB服务及连接
+
+打开 `控制面板 > 程序` ，点击启用或关闭Windows功能。
+
+![image-20251013163158761](https://s2.loli.net/2025/10/14/uVx156ZIjNcbtDg.png)
+
+勾选 SMB 服务相关的两个选项如下，保存后重启电脑。
+
+![image-20251013163244516](https://s2.loli.net/2025/10/14/3I4kojeJSMnaFz5.png)
+
+打开“我的电脑”，输入Internet地址或网络地址：
+
+``````
+\\10.11.12.134
+``````
+
+同样输入用户名和密码之后进入服务器，此时可以选择“映射网络驱动器”，可以看到完成后与FTP方法有所区别，现在你可以把NAS当做本地磁盘来正常使用了。
+
+![image-20251013214518374](https://s2.loli.net/2025/10/14/qtjXVsUTA8xBDoP.png)
+
+![image-20251013214954726](https://s2.loli.net/2025/10/14/Ll7jpPH5ksc1CUV.png)
