@@ -4,3 +4,4 @@ Thumbs.db
 public/
 .deploy*/
 _multiconfig.yml
+node_modules/
