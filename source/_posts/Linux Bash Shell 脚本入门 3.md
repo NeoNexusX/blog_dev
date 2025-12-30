@@ -1,7 +1,3 @@
-​                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-
-
-
 ---
 title: Linux Bash Shell 脚本入门（3）——Linux常用命令介绍
 categories:
@@ -13,8 +9,6 @@ date: "2025/03/12 18:37:00"
 ---
 
 # Linux Bash Shell 脚本入门（3）——Linux常用命令介绍
-
-
 
 [TOC]
 

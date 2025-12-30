@@ -1,5 +1,3 @@
-​                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-
 ---
 title: Linux Bash Shell 脚本入门（1）——Linux内核功能介绍
 categories:
@@ -12,13 +10,12 @@ date: "2025/03/12 18:37:00"
 
 # Linux Bash Shell 脚本入门（1）——Linux内核功能介绍
 
-
-
 [TOC]
 
 <!-- toc -->
 
 <img src="https://s2.loli.net/2025/03/12/ns1Fc3hg9ztLBpY.jpg" alt="[lab.magiconch.com][福音戰士標題生成器]-1741766727606" style="zoom:67%;" />
+
 
 <img src="https://s2.loli.net/2023/09/18/zXu5EpoCmKH8FiJ.jpg" alt="[lab.magiconch.com][福音戰士標題生成器]-1695021721029" style="zoom: 50%;" />
 

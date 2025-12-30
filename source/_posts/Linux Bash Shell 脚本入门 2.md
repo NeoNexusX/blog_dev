@@ -1,5 +1,3 @@
-​                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-
 ---
 title: Linux Bash Shell 脚本入门（2）——GNU
 categories:
@@ -11,8 +9,6 @@ date: "2025/03/12 18:37:00"
 ---
 
 # Linux Bash Shell 脚本入门（2）——GNU
-
-
 
 [TOC]
 
@@ -56,7 +52,7 @@ Unix在学术机构和大型企业中得到了广泛的应用，当时的UNIX拥
 
 下图是大佬的照片：
 
-<img src="https://s3.bmp.ovh/imgs/2022/08/12/b0dde8c65ef4b8b8.jpg" alt="Richard_Stallman_at_LibrePlanet_2019" style="zoom:67%;" />
+<img src="https://s3.bmp.ovh/imgs/2022/08/12/b0dde8c65ef4b8b8.jpg" alt="Richard_Stallman_at_LibrePlanet_2019" style="zoom: 33%;" />
 
 除了上述的第三方组件外，大多数的GNU软件是由许多志愿者，在他们的空闲时间，或由公司、教育机构和非营利性组织赞助下撰写。
 
