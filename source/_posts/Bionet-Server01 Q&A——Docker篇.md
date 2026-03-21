@@ -6,7 +6,7 @@ tags:
   - Bionet
   - ops
   - Q&A
-date: "2024/09/21 20:46:25"
+date: "2026/03/18 19:31:36"
 ---
 
 # BionetServer-No1. Q&A-Docker
@@ -15,12 +15,12 @@ date: "2024/09/21 20:46:25"
 
 <img src="https://s2.loli.net/2023/09/18/zXu5EpoCmKH8FiJ.jpg" alt="标准监督" style="zoom: 50%;" />
 
-Version:1.0
+Version:1.1
 
 
-Date: 2025.10.10
+Date: 2026.03.18
 
-Authors：NeoNexus
+Authors：NeoNexus, dlq
 
 <!-- toc -->
 
@@ -112,7 +112,7 @@ drwxrwxr-- 2 1001 1000 4.0K Jun  7 09:13 TEST
 
 ![image-20240426194356414](https://s2.loli.net/2024/04/26/uPmNqxek4pWlFCa.png)
 
-
+考虑是否有端口冲突，网络问题等，排查后仍无法连接请联系我
 
 ### 问题二 创建一个Docker失败之后再次连接相同端口为什么不行？
 
@@ -225,43 +225,7 @@ nohup /opt/conda/bin/python /home/Share_Space/metrics_ml/GA_xgboost.py 2>&1  &
 nohup /opt/conda/bin/python -u /home/Share_Space/metrics_ml/GA_xgboost.py 2>&1  &
 ```
 
-### 问题六 R_studio打开之后没有见对应这两个文件夹
-
-如打开之后没有见到这两个文件夹，可以先将默认目录设置到~
-
-使用命令：
-
-```R
-setwd("~")
-```
-
-效果如图：
-
-![image-20241127114234957](https://s2.loli.net/2024/11/27/ZcEwh3GUDMXkOKj.png)
-
-然后刷新一下页面，一定要刷新一下。然后结果：应该是这样：
-
-![image-20241127114538542](https://s2.loli.net/2024/11/27/MLvFi62cVBoDnwu.png)
-
-如果还不行，可以打开命令行使用如下命令：
-
-![image-20241023232258889](https://s2.loli.net/2024/10/23/gHJXbLxNn9UBS4d.png)
-
-使用命令：
-
-```bash
-# 创建从 /home/user1/host 到 /home/host/R_Share/user1 的软链接
-ln -s /home/host/R_Share/user1 /home/user1/host
-
-# 创建从 /home/user1/Datasets 到 /home/host/Datasets 的软链接
-ln -s /home/host/Datasets /home/user1/Datasets
-```
-
-user1需要替换的你的用户名，比如我的是Neo：
-
-<img src="https://s2.loli.net/2024/10/23/JjGr1sMXhbpDVWQ.png" alt="image-20241023232512786" style="zoom:67%;" />
-
-### 问题七 创建容器提示Code Failed 500 代码错误
+### 问题六 创建容器提示Code Failed 500 代码错误
 
 排查是否有以下几个问题：
 
@@ -275,5 +239,126 @@ user1需要替换的你的用户名，比如我的是Neo：
 
 不要偷懒，直接复制这个错误的镜像号码，正确的镜像一般以bionet或者neonexus开头，下边是一个错误示范：
 
-![image-20250925235955883](https://s2.loli.net/2025/09/25/3TsF1QlIkbLBK2D.png)
+<img src="https://s2.loli.net/2025/09/25/3TsF1QlIkbLBK2D.png" alt="image-20250925235955883" style="zoom:50%;" />
+
+### 问题七 如何给conda配置国内镜像源
+
+1. 切换容器的目录到`/root`下
+
+   <img src="https://s2.loli.net/2024/04/01/Wom9RfSLKHzdqnl.png" alt="image-20240401165118181" style="zoom:80%;" />
+
+2. 在容器的`/root`目录下新建`.condarc`文件
+
+<img src="https://s2.loli.net/2024/04/01/5oOPIieFVp7Xvm2.png" alt="image-20240401165149467" style="zoom: 67%;" />
+
+3. 复制以下内容到`.condarc`文件中并保存：
+
+```bash
+channels:
+  - defaults
+show_channel_urls: true
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  deepmodeling: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/
+```
+
+4. 使用以下命令清楚缓存（想要恢复默认也使用这个）
+
+```bash
+conda clean -i
+```
+
+5. 用 `conda info` 检查配置是否生效，确认 `channel URLs` 已经变成清华源地址。结果应该如下所示：
+
+![image-20240401165401775](https://s2.loli.net/2024/04/01/L9oMIZgW6JEk1U5.png)
+
+### 问题八 如何开启容器的免密登陆
+
+开启免密码登录方式如下：
+
+首先打开你的ssh配置文件：
+
+<img src="https://s2.loli.net/2024/04/03/dgPwOnKMThcuGAq.png" alt="image-20240403170216864" style="zoom:67%;" />
+
+打开之后我们先放这里，等下再用。我们把这个路径叫做SSH配置路径，一定要记住这个路径，可以截图。
+
+我们在windos文件管理器中打开这个文件夹：
+
+<img src="https://s2.loli.net/2024/04/03/v9sV2CIUkceziL1.png" alt="image-20240403170412513" style="zoom:80%;" />
+
+这里分为两种情况，一种是你已经有了上述`id_rsa.pub`文件，如上图红框所示。
+
+另一种情况是没有这个文件，如下所示：
+
+<img src="https://s2.loli.net/2024/04/03/z48qTZJ75yNMaoL.png" alt="29c9f2a1ef1c58e7deeae3ac742c00f" style="zoom:80%;" />
+
+如果你没有，我们打开本地的系统命令行：
+
+<img src="https://s2.loli.net/2024/04/03/KenW8bEy1gwz9UI.png" alt="image-20240403170517802" style="zoom:80%;" />
+
+输入以下内容：
+
+```bash
+ssh-keygen
+```
+
+<img src="https://s2.loli.net/2024/04/03/ivOr8YQgDAbcLq2.png" alt="image-20240403170800926" style="zoom:80%;" />
+
+这里会提示让你输入密钥文件保存在哪里，这里就要放在你刚才的那个路径的文件下面，就是在vscode设置中打开的路径。记住是文件夹，不是文件，文件夹通常名字为：".ssh"。
+
+输入之后一路回车下去直到看到这个图形生成：
+
+<img src="https://s2.loli.net/2024/04/03/WmeMaujYiO9Ix6G.png" alt="image-20240403171025319" style="zoom:67%;" />
+
+这里就结束了，然后我们回过头打开这个文件，使用vscode或者记事本都可以，同时我们也打开远程服务器的这个目录下的文件：
+
+这路径全名是：
+
+```bash
+/root/.ssh/authorized_keys
+```
+
+<img src="https://s2.loli.net/2024/04/03/fHrEOVRzybCqh3W.png" alt="image-20240403171155723" style="zoom:67%;" />
+
+打开之后我们将刚才打开的`id_rsa.pub`文件中的内容复制过来，通常如下图所示：
+
+<img src="https://s2.loli.net/2024/04/03/xXeDynObsMYK9Ez.png" alt="image-20240403171427044" style="zoom: 67%;" />
+
+然后我们回到最初打开的ssh配置文件，在你的电脑SSH配置路径上，如果没打开的话，我们还是点击这里打开：
+
+<img src="https://s2.loli.net/2024/04/03/6TcAB2P7SVDQUuC.png" alt="image-20240403171545385" style="zoom: 67%;" />
+
+添加一行内容：
+
+```bash
+IdentityFile "C:\Users\NeoNexus\.ssh\id_rsa"  这里的路径要修改成你的配置路径，要记得这里的id_rsa文件并不带pub后缀因为这是私钥
+```
+
+添加后效果如下：
+
+![image-20240403171709698](https://s2.loli.net/2024/04/03/sVCgWRw4FJBLZtj.png)
+
+记得Ctrl+S保存修改
+
+重启VSCode就可以愉快免密码直接使用了
+
+### 问题九  VScode 代码补全失效
+
+Vscode代码补全静态检查等依赖于其对应的语言插件
+
+手动开启可以尝试：
+
+![image-20240402224047196](https://s2.loli.net/2024/04/02/bzmETWanVH6YZ49.png)
+
+
 
