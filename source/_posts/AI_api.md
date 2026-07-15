@@ -4,7 +4,7 @@ categories:
   - AI
 tags:
   - AI
-date: "2026/06/17 20:46:25"
+date: "2026/07/15 09:46:25"
 ---
 
 <img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/%5Blab.magiconch.com%5D%5B%E7%A6%8F%E9%9F%B3%E6%88%B0%E5%A3%AB%E6%A8%99%E9%A1%8C%E7%94%9F%E6%88%90%E5%99%A8%5D-1781699675177.jpg" alt="[lab.magiconch.com][福音戰士標題生成器]-1781699675177" style="zoom:50%;" />
@@ -30,7 +30,7 @@ date: "2026/06/17 20:46:25"
 
 cc-switch 是 API 配置管理和模型代理的核心工具，Claude Code、Codex、Cherry Studio 的配置均依赖它，建议最先安装。
 
-> 提示：请下载最新版本安装，无需与文档截图中的版本一致。
+> 提示：**请下载最新版本安装，无需与文档截图中的版本一致。**
 
 下载地址：
 
@@ -87,7 +87,7 @@ API key：NEWAPI_CC_KEY【找主管人员要】
 请求地址：http://47.113.198.26
 ```
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617212412742.png" alt="image-20260617212412742" style="zoom: 50%;" />
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617212412742.png" alt="image-20260617212412742" style="zoom: 67%;" />
 
 获取模型配置信息：
 
@@ -161,7 +161,7 @@ API key：NEWAPI_CC_KEY【找主管人员要】
 
 <img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617215053339.png" alt="image-20260617215053339" style="zoom:50%;" />
 
-模型配置推荐如下，可参考截图设置：
+模型配置推荐如下，可参考截图或复制下方 JSON 覆盖：
 
 ![image-20260617215256740](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617215256740.png)
 
@@ -169,7 +169,7 @@ API key：NEWAPI_CC_KEY【找主管人员要】
 
 ### 1. 安装 Codex
 
-> 提示：请安装最新版本的 Codex，无需与文档截图中的版本一致。
+> 提示：**请安装最新版本的 Codex，无需与文档截图中的版本一致。**
 
 下载地址：
 
@@ -181,17 +181,29 @@ https://openai.com/zh-Hans-CN/codex/
 
 ### 2. 在 cc-switch 中添加配置
 
+![image-20260715122432874](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715122432874.png)
+
+![image-20260715122513649](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715122513649.png)
+
 ```text
 供应商名称：NewAPI codex 专用
 Api key：NEWAPI_CODEX_KEY
 API 地址：http://47.113.198.26/v1
 ```
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260421231440252.png_neo" alt="image-20260421231440252" style="zoom:80%;" />
+![image-20260715140942010](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715140942010.png)
 
-修改完成后，重启 Codex。其他配置保持默认即可正常使用。
+只需要填写地址和API Key 即可，完成后，重启 Codex。其他配置保持默认即可正常使用。保存配置后请重启codex。
 
-Codex 目前仅支持 GPT 系列模型。
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715122737312.png" alt="image-20260715122737312" style="zoom:50%;" />
+
+Codex 国产模型接入，目前已经更新支持国产模型：
+
+在CCswitch 里面：选择对应的模型，然后保存，**重启codex**，记住一定要重启：
+
+![image-20260715141218167](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715141218167.png)
+
+![image-20260715141335209](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715141335209.png)
 
 ## 五、Cherry Studio 综合对话配置
 
@@ -230,18 +242,43 @@ API 地址：http://47.113.198.26
 
 下面举两个例子。添加模型后点击模型设置：
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260506150339942.png_neo" alt="image-20260506150339942" style="zoom: 50%;" />
+![image-20260715122327316](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715122327316.png)
+
+更新模型端点：
+
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715122207624.png" alt="image-20260715122207624" style="zoom: 50%;" />
 
 Claude 系列模型：
 
 <img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260506150442656.png_neo" alt="image-20260506150442656" style="zoom:67%;" />
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260506150459853.png_neo" alt="image-20260506150459853" style="zoom:67%;" />
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260506150459853.png_neo" alt="image-20260506150459853" style="zoom: 50%;" />
 
 Google 系列端口修改：
 
 ![image-20260507163336410](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260507163336410.png_neo)
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260507163346370.png_neo" alt="image-20260507163346370" style="zoom:67%;" />
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260507163346370.png_neo" alt="image-20260507163346370" style="zoom: 50%;" />
 
-其他不需要改动。
+## QA：
+
+### 报错 端点类型 不正确
+
+```bash
+codex channel: /v1/chat/completions endpoint not supported (request id: 202607150616095162701178268d9d6OnzYLdSu)
+```
+
+![image-20260715141753537](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715141753537.png)
+
+请根据上边内容调整端点类型，**国产模型默认是 openai格式**,Openai默认是 Response 模式。
+
+### 报错 502 upstream error
+
+**近期梯子不太稳定，如果频繁出现，请联系我切换备用梯子，或者先使用国产模型。**
+
+
+
+
+
+
+
