@@ -13,11 +13,11 @@ date: "2026/06/17 20:46:25"
 
 # 崽崽
 
-生日：5月8日
+Birthday: May 8；生日：5月8日
 
-性别：女
+Gender: Female；性别：母
 
-高清大图，免费下载
+High-resolution photos, free to download；高清大图，免费下载
 
 ![DSC00640](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/DSC00640.jpg_neo)
 
