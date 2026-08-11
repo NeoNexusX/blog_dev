@@ -38,7 +38,11 @@ https://api.neonexus.top/
 
 ![image-20260811114709642](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/image-20260811114709642.png_view)
 
-默认分组选择 `auto` 即可：
+创建令牌，推荐针对不同的用途选择不同的分组，比如在claude code 中使用选择,cherry studio 支持不同的端口，所以选择auto也是可以的，codex只支持response端口，在code使用的时候请使用codex分组
+
+<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811131858643.jpg_view" alt="image-20260811131858580" style="zoom:50%;" />
+
+默认令牌分组选择 `auto` 即可，但是模型显示可能不准确，有些模型仅支持claude接口，有些仅openai接口，如果想先试试，可以先用auto，如果选了一直没有回复或者报错，请把使用记录发给我：
 
 <img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811115510626.jpg_view" alt="image-20260811115510027" style="zoom:50%;" />
 
@@ -302,21 +306,37 @@ Google 系列端口修改：
 
 <img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260507163346370.png_neo" alt="image-20260507163346370" style="zoom: 50%;" />
 
-## QA：
+## QA：常见报错及其原因
 
-### 报错 端点类型 不正确
+#### 1.没有回复，回复比较慢，status_code=500，400等问题
+
+**status_code=500, not implemented**
+
+**status_code=400, Error from provider (Console): Upstream request failed: [invalid_request_error] Failed to deserialize the JSON body into the target type: tools[14].function: missing field `name` at line 1 column 17015**
+
+api 密钥的端点选择不正确，应该选择软件对应的端点：
+
+![image-20260811145637249](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811145637353.jpg_view)
+
+生成应用对应的令牌即可继续使用：
+
+![image-20260811145948939](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811145949049.jpg_view)
+
+#### 2.Cherry studio报错 端点类型 不正确
 
 ```bash
 codex channel: /v1/chat/completions endpoint not supported (request id: 202607150616095162701178268d9d6OnzYLdSu)
 ```
 
-![image-20260715141753537](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715141753537.png)
+这里的报错正好相反，这里是cherry studio的端口选择不正确，选择对应的端口即可解决：
 
-请根据上边内容调整端点类型，**国产模型默认是 openai格式**,Openai默认是 Response 模式。
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715141753537.png" alt="image-20260715141753537" style="zoom: 50%;" />
 
-### 报错 502 upstream error
+请根据上边内容调整端点类型，Chatgpt系列模型默认是 **Response 模式**。
 
-**近期梯子不太稳定，如果频繁出现，请联系我切换备用梯子，或者先使用国产模型。**
+#### 3.报错 502 upstream error
+
+**近期梯子不太稳定，如果频繁出现，请联系管理员切换备用梯子，或者先使用国产模型。**
 
 
 
