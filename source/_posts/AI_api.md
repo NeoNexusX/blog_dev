@@ -24,7 +24,29 @@ date: "2026/07/15 09:46:25"
 - 包月计费，**一般不限量**。
 - 按量计费，**一般按照价格计算**。
 - **有些是混合计费，优先使用包月计费，不够用时使用其他渠道补充**。
-- **对应的 API KEY 需要按照名字替换**（文档中的 `NEWAPI_CC_KEY` 等为占位符，请替换为从主管处获取的真实 Key）。
+- **文档中的 `NEWAPI_CC_KEY`、`NEWAPI_CODEX_KEY`、`NEWAPI_CHERRY_KEY` 等均为占位符，请统一替换为你在第零节注册账号后自行创建的 API Key。**
+
+## 零、注册账号并获取 API Key
+
+访问以下地址注册账号：
+
+https://api.neonexus.top/
+
+<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/image-20260811114613406.png_view" alt="image-20260811114613406" style="zoom:50%;" />
+
+创建 API Key：
+
+![image-20260811114709642](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/image-20260811114709642.png_view)
+
+默认分组选择 `auto` 即可：
+
+<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811115510626.jpg_view" alt="image-20260811115510027" style="zoom:50%;" />
+
+下文各章节需要填写的 API Key，均在这里自行创建并复制：
+
+![image-20260811115819225](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811115819301.png_view)
+
+
 
 ## 一、cc-switch：API 配置管理与代理工具
 
@@ -71,7 +93,7 @@ VS Code 插件安装：
 - DeepSeek V4 系列模型
 - GLM 系列
 - Kimi 系列
-- MiniMax 系列
+- MiniMax 系列 【已剔除，后续考虑添加】
 
 #### 1. 在 cc-switch 中添加供应商
 
@@ -79,15 +101,13 @@ VS Code 插件安装：
 
 向下滚动，填写以下信息：
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260427004611960.png_neo" alt="image-20260427004611960" style="zoom: 67%;" />
-
 ```text
 供应商名称：NewAPI-cc
-API key：NEWAPI_CC_KEY【找主管人员要】
-请求地址：http://47.113.198.26
+API key：NEWAPI_CC_KEY【替换为你在第零节自行创建的 API Key】
+请求地址：http://47.113.198.26 【注意地址不要填写域名，请填写ip】
 ```
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617212412742.png" alt="image-20260617212412742" style="zoom: 67%;" />
+<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811123731828.jpg_view" alt="image-20260811123731770" style="zoom:50%;" />
 
 获取模型配置信息：
 
@@ -95,43 +115,51 @@ API key：NEWAPI_CC_KEY【找主管人员要】
 
 #### 使用国产系列模型
 
-推荐使用国产模型配置，高性能且不限量。可先按此处使用 DeepSeek 配置，后续再尝试其他喜欢的模型：
+推荐使用国产模型配置，高性能且不限量。可先按此处使用配置，后续再尝试其他喜欢的模型：
 
-![image-20260617212823420](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617212823420.png)
+<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811122426168.png_view" alt="image-20260811122426075" style="zoom:67%;" />
 
 向下滑动，下侧配置 JSON 应如下所示：
 
-![image-20260617212951811](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617212951811.png)
+<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811124748894.jpg_view" alt="image-20260811124748837" style="zoom:67%;" />
 
 如果上方看到的不一样，可参考下方内容复制覆盖：
 
 ```json
 {
-  "effortLevel": "xhigh",
+  "effortLevel": "max",
+  "enableWorkflows": true,
   "env": {
-    "ANTHROPIC_AUTH_TOKEN": "NEWAPI_CC_KEY【找主管人员要】",
+    "ANTHROPIC_AUTH_TOKEN": "你的 API Key",
     "ANTHROPIC_BASE_URL": "http://47.113.198.26",
+    "ANTHROPIC_DEFAULT_FABLE_MODEL": "k3[1M]",
+    "ANTHROPIC_DEFAULT_FABLE_MODEL_NAME": "k3",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME": "deepseek-v4-flash",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-pro[1M]",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "deepseek-v4-pro",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-pro[1M]",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "deepseek-v4-pro",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "k3-256k",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "k3-256k",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5.2[1M]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "glm-5.2",
+    "ANTHROPIC_MODEL": "k3[1M]",
     "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "1000000",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1,
     "CLAUDE_CODE_EFFORT_LEVEL": "max",
-    "ENABLE_TOOL_SEARCH": "true",
-    "ANTHROPIC_MODEL": "deepseek-v4-pro",
-    "ANTHROPIC_DEFAULT_FABLE_MODEL": "deepseek-v4-pro[1M]",
-    "ANTHROPIC_DEFAULT_FABLE_MODEL_NAME": "deepseek-v4-pro"
+    "CLAUDE_CODE_SUBAGENT_MODEL": "deepseek-v4-pro[1M]",
+    "ENABLE_TOOL_SEARCH": "true"
   },
-  "includeCoAuthoredBy": false
+  "includeCoAuthoredBy": false,
+  "model": "haiku",
+  "permissions": {
+    "allow": [
+      "Bash(curl -fsSL *)"
+    ]
+  }
 }
 ```
 
 注意：API Key 需在一行内填写，不要换行。配置后格式应如下图，如果格式不正确，请点击**格式化**。
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617213025954.png" alt="image-20260617213025954" style="zoom:67%;" />
+![image-20260811123000735](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811123251292.png_view)
 
 #### 2. 重启 VS Code 并开始使用
 
@@ -155,7 +183,7 @@ https://claude.com/product/claude-code
 
 ```text
 供应商名称：NewAPI-cc
-API key：NEWAPI_CC_KEY【找主管人员要】
+API key：NEWAPI_CC_KEY【替换为你在第零节自行创建的 API Key】
 请求地址：http://47.113.198.26
 ```
 
@@ -187,23 +215,37 @@ https://openai.com/zh-Hans-CN/codex/
 
 ```text
 供应商名称：NewAPI codex 专用
-Api key：NEWAPI_CODEX_KEY
+API key：NEWAPI_CODEX_KEY【替换为你在第零节自行创建的 API Key】
 API 地址：http://47.113.198.26/v1
 ```
 
 ![image-20260715140942010](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715140942010.png)
 
-只需要填写地址和API Key 即可，完成后，重启 Codex。其他配置保持默认即可正常使用。保存配置后请重启codex。
+只需要填写 API 地址和你在第零节自行创建的 API Key，其他配置保持默认即可。保存配置后请重启 Codex。
 
 <img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715122737312.png" alt="image-20260715122737312" style="zoom:50%;" />
 
-Codex 国产模型接入，目前已经更新支持国产模型：
+### Codex 国产模型接入
+
+Codex 国产模型接入，目前已经更新支持国产模型，优先推荐使用GPT原生模型，不够用了再换国产，目前支持的：
+
+国产模型包括：
+
+- **GLM-5.2**
+- **K3**
+- **DeepSeek V4 Flash**
+
+其他陆续支持，会加入这里
 
 在CCswitch 里面：选择对应的模型，然后保存，**重启codex**，记住一定要重启：
 
 ![image-20260715141218167](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715141218167.png)
 
-![image-20260715141335209](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715141335209.png)
+![image-20260811130247478](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811130247524.jpg_view)
+
+登录官网使用记录可以看到对应的模型信息：
+
+![image-20260811130339073](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811130339648.jpg_view)
 
 ## 五、Cherry Studio 综合对话配置
 
@@ -212,7 +254,7 @@ Codex 国产模型接入，目前已经更新支持国产模型：
 打开 Cherry Studio，添加 API 配置：
 
 ```text
-API 密钥：NEWAPI_CHERRY_KEY
+API 密钥：NEWAPI_CHERRY_KEY【替换为你在第零节自行创建的 API Key】
 API 地址：http://47.113.198.26
 ```
 
@@ -230,13 +272,13 @@ API 地址：http://47.113.198.26
 
 需要注意的是，不同厂商的模型在添加之后需要修改请求格式。大部分模型不需要修改，部分模型需要修改：
 
-- GPT 系列模型：OpenAI-Response 端点
-- Claude 系列模型：Anthropic 端点
-- Gemini 系列模型：Gemini 端点
-- Kimi 系列模型：OpenAI 端点
-- GLM 系列模型：Anthropic 端点 / OpenAI 端点
-- MiniMax 系列模型：Anthropic 端点
-- Mimo 系列模型：Anthropic 端点
+- **GPT 系列模型：OpenAI-Response 端点**
+- **Claude 系列模型：Anthropic 端点**
+- **Gemini 系列模型：Gemini 端点**
+- **Kimi 系列模型：OpenAI 端点**
+- **GLM 系列模型：Anthropic 端点 / OpenAI 端点**
+- **MiniMax 系列模型：Anthropic 端点**
+- **Mimo 系列模型：Anthropic 端点**
 
 > 修改的原因在于各家接口标准不一致，为了满血体验最好按需修改。
 
@@ -275,10 +317,6 @@ codex channel: /v1/chat/completions endpoint not supported (request id: 20260715
 ### 报错 502 upstream error
 
 **近期梯子不太稳定，如果频繁出现，请联系我切换备用梯子，或者先使用国产模型。**
-
-
-
-
 
 
 
