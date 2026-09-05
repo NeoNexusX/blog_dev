@@ -17,7 +17,7 @@ date: "2026/09/01 09:46:25"
 - 使用 cc-switch 管理 API 配置与模型代理。
 - 在 Codex 或 Claude Code 中接入自建 API 进行编程辅助。
 
-**模型表**：http://47.113.198.26/pricing
+**模型表**：https://api.neonexus.top/pricing
 
 ### 注意
 
@@ -41,6 +41,8 @@ https://api.neonexus.top/
 - Cherry Studio：支持多种接口，可选择 Auto 分组，由系统自动匹配。
 - Codex：仅支持 Responses 接口，因此使用 Codex 时请选择 Codex 专用分组。
 
+分组是在创建令牌时选定的，之后每个 Key 只走自己的分组，因此建议**一个分组建一个 Key**：Claude Code、Codex、Cherry Studio 各创建一个令牌，分别对应上面三个分组，这样切换软件时不用回后台来回改分组，也就是本文开头提到的 `NEWAPI_CC_KEY`、`NEWAPI_CODEX_KEY`、`NEWAPI_CHERRY_KEY` 三个占位符。
+
 <img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811131858643.jpg_view" alt="image-20260811131858580" style="zoom: 33%;" />
 
 默认令牌分组选择 `auto` 即可，但是模型显示可能不准确，有些模型仅支持claude接口，有些仅openai接口，如果想先试试，可以先用auto，如果选了一直没有回复或者报错，请把使用记录发给管理人员：
@@ -55,7 +57,7 @@ https://api.neonexus.top/
 
 ## 一、cc-switch：API 配置管理与代理工具
 
-cc-switch 是 API 配置管理和模型代理的核心工具，Claude Code、Codex、Cherry Studio 的配置均依赖它，建议最先安装。
+cc-switch 是 API 配置管理和模型代理的核心工具，建议最先安装。
 
 > 提示：**请下载最新版本安装，无需与文档截图中的版本一致。**
 
@@ -63,7 +65,7 @@ cc-switch 是 API 配置管理和模型代理的核心工具，Claude Code、Cod
 
 https://github.com/farion1231/cc-switch/releases
 
-macOS 选择：
+新版macOS 选择，老版请选x86架构：
 
 ![image-20260421193127674](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260421193127674.png_neo)
 
@@ -109,51 +111,51 @@ VS Code 插件安装：
 ```text
 供应商名称：NewAPI-cc
 API key：NEWAPI_CC_KEY【替换为你在第零节自行创建的 API Key】
-请求地址：http://47.113.198.26 【注意地址不要填写域名，请填写ip】
+请求地址：https://api.neonexus.top
 ```
 
-<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811123731828.jpg_view" alt="image-20260811123731770" style="zoom:50%;" />
+![image-20260905233508310](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260905233508372.jpg/kawu_tech_ez)
 
 获取模型配置信息：
 
-![image-20260617212444764](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617212444764.png)
+![image-20260905233558126](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260905233622263.jpg/kawu_tech_ez)
 
 #### 使用国产系列模型
 
-推荐使用国产模型配置，高性能且不限量。可先按此处使用配置，后续再尝试其他喜欢的模型：
+推荐使用国产模型配置。可先按此处使用配置，后续再尝试其他喜欢的模型：
 
-<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811122426168.png_view" alt="image-20260811122426075" style="zoom:67%;" />
+![image-20260905233758467](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260905233758505.jpg/kawu_tech_ez)
 
 向下滑动，下侧配置 JSON 应如下所示：
 
-<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811124748894.jpg_view" alt="image-20260811124748837" style="zoom:67%;" />
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260905234319838.jpg/kawu_tech_ez" alt="image-20260905234243071" style="zoom: 50%;" />
 
 如果上方看到的不一样，可参考下方内容复制覆盖：
 
 ```json
 {
-  "effortLevel": "max",
-  "enableWorkflows": true,
   "env": {
-    "ANTHROPIC_AUTH_TOKEN": "你的 API Key",
-    "ANTHROPIC_BASE_URL": "http://47.113.198.26",
-    "ANTHROPIC_DEFAULT_FABLE_MODEL": "k3[1M]",
+    "ANTHROPIC_AUTH_TOKEN": "你的key",
+    "ANTHROPIC_BASE_URL": "https://api.neonexus.top",
+    "ANTHROPIC_DEFAULT_FABLE_MODEL": "k3",
     "ANTHROPIC_DEFAULT_FABLE_MODEL_NAME": "k3",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME": "deepseek-v4-flash",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "k3-256k",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "k3-256k",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5.2[1M]",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "glm-5.2",
-    "ANTHROPIC_MODEL": "k3[1M]",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash-vision-exp",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME": "deepseek-v4-flash-vision-exp",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.3[1M]",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "glm-5.3",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5.3-flash[1M]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "glm-5.3-flash",
+    "ANTHROPIC_MODEL": "glm-5.3[1M]",
     "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "1000000",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1,
+    "CLAUDE_CODE_SUBAGENT_MODEL": "glm-5.3[1M]",
     "CLAUDE_CODE_EFFORT_LEVEL": "max",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "deepseek-v4-pro[1M]",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1,
     "ENABLE_TOOL_SEARCH": "true"
   },
+  "effortLevel": "max",
+  "enableWorkflows": true,
   "includeCoAuthoredBy": false,
-  "model": "haiku",
+  "model": "sonnet",
   "permissions": {
     "allow": [
       "Bash(curl -fsSL *)"
@@ -164,7 +166,7 @@ API key：NEWAPI_CC_KEY【替换为你在第零节自行创建的 API Key】
 
 注意：API Key 需在一行内填写，不要换行。配置后格式应如下图，如果格式不正确，请点击**格式化**。
 
-![image-20260811123000735](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811123251292.png_view)
+![image-20260905234121789](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260905234121851.jpg/kawu_tech_ez)
 
 #### 2. 重启 VS Code 并开始使用
 
@@ -189,10 +191,10 @@ https://claude.com/product/claude-code
 ```text
 供应商名称：NewAPI-cc
 API key：NEWAPI_CC_KEY【替换为你在第零节自行创建的 API Key】
-请求地址：http://47.113.198.26
+请求地址：https://api.neonexus.top
 ```
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617215053339.png" alt="image-20260617215053339" style="zoom:50%;" />
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260905235033535.jpg/kawu_tech_ez" alt="image-20260905235032964" style="zoom:50%;" />
 
 ## 四、Codex 接入配置
 
@@ -217,10 +219,10 @@ https://openai.com/zh-Hans-CN/codex/
 ```text
 供应商名称：NewAPI codex 专用
 API key：NEWAPI_CODEX_KEY【替换为你在第零节自行创建的 API Key】
-API 地址：http://47.113.198.26/v1
+API 地址：https://api.neonexus.top/v1
 ```
 
-![image-20260715140942010](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715140942010.png)
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260905235207104.jpg/kawu_tech_ez" alt="image-20260905235207051" style="zoom:50%;" />
 
 只需要填写 API 地址和你在第零节自行创建的 API Key，其他配置保持默认即可。保存配置后请重启 Codex。
 
@@ -240,7 +242,11 @@ Codex 国产模型接入，目前已经更新支持国产模型，优先推荐�
 
 在CCswitch 里面：选择对应的模型，然后保存，**重启codex**，**记住一定要重启**：
 
-![image-20260715141218167](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715141218167.png)
+![image-20260905235431658](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260905235551237.jpg/kawu_tech_ez)
+
+需要注意的是上下文压缩要打开：
+
+![image-20260905235630977](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260905235631043.jpg/kawu_tech_ez)
 
 ![image-20260811130247478](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811130247524.jpg_view)
 
@@ -256,14 +262,14 @@ Codex 国产模型接入，目前已经更新支持国产模型，优先推荐�
 
 ```text
 API 密钥：NEWAPI_CHERRY_KEY【替换为你在第零节自行创建的 API Key】
-API 地址：http://47.113.198.26
+API 地址：https://api.neonexus.top
 ```
 
 搜索New API：
 
 ![image-20260903153108473](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903153108514.jpg/kawu_tech_ez)
 
-![image-20260903152714971](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903152715067.jpg/kawu_tech_ez)
+![image-20260905235946918](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260905235946982.jpg/kawu_tech_ez)
 
 填写上述信息。
 
@@ -315,11 +321,11 @@ Google 系列端口修改：
 
 然后配置模型链接信息：
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903142016754.jpg_neo" alt="image-20260903142016699" style="zoom:50%;" />
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260906000827915.jpg/kawu_tech_ez" alt="image-20260906000827838" style="zoom:67%;" />
 
-填写：`http://47.113.198.26/v1`
+填写：`https://api.neonexus.top/v1`
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903143302092.jpg/kawu_tech_ez" alt="image-20260903143302045" style="zoom: 50%;" />
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260906000138519.jpg/kawu_tech_ez" alt="image-20260906000138456" style="zoom:50%;" />
 
 同时设置默认模型：
 
@@ -343,7 +349,7 @@ Google 系列端口修改：
 
 **status_code=400, Error from provider (Console): Upstream request failed: [invalid_request_error] Failed to deserialize the JSON body into the target type: tools[14].function: missing field `name` at line 1 column 17015**
 
-api 密钥的端点选择不正确，请去后台查看使用记录，应该选择软件适配对应的端点：
+api 密钥的令牌分组选择不正确，请去后台查看使用记录，应该选择软件适配对应的分组：
 
 ![image-20260811145637249](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811145637353.jpg_view)
 
