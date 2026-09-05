@@ -1,10 +1,10 @@
 ---
 title: AI Agent Cookbook
 categories:
-  - AI
+  - AI API
 tags:
-  - AI
-date: "2026/07/15 09:46:25"
+  - AI API
+date: "2026/09/01 09:46:25"
 ---
 
 <img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/%5Blab.magiconch.com%5D%5B%E7%A6%8F%E9%9F%B3%E6%88%B0%E5%A3%AB%E6%A8%99%E9%A1%8C%E7%94%9F%E6%88%90%E5%99%A8%5D-1781699675177.jpg" alt="[lab.magiconch.com][福音戰士標題生成器]-1781699675177" style="zoom:50%;" />
@@ -17,13 +17,10 @@ date: "2026/07/15 09:46:25"
 - 使用 cc-switch 管理 API 配置与模型代理。
 - 在 Codex 或 Claude Code 中接入自建 API 进行编程辅助。
 
-**模型价格表**：http://47.113.198.26/pricing
+**模型表**：http://47.113.198.26/pricing
 
 ### 注意
 
-- 包月计费，**一般不限量**。
-- 按量计费，**一般按照价格计算**。
-- **有些是混合计费，优先使用包月计费，不够用时使用其他渠道补充**。
 - **文档中的 `NEWAPI_CC_KEY`、`NEWAPI_CODEX_KEY`、`NEWAPI_CHERRY_KEY` 等均为占位符，请统一替换为你在第零节注册账号后自行创建的 API Key。**
 
 ## 零、注册账号并获取 API Key
@@ -38,13 +35,17 @@ https://api.neonexus.top/
 
 ![image-20260811114709642](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/image-20260811114709642.png_view)
 
-创建令牌，推荐针对不同的用途选择不同的分组，比如在claude code 中使用选择,cherry studio 支持不同的端口，所以选择auto也是可以的，codex只支持response端口，在code使用的时候请使用codex分组
+创建令牌时，建议根据实际使用场景选择对应的分组：
 
-<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811131858643.jpg_view" alt="image-20260811131858580" style="zoom:50%;" />
+- Claude Code：请选择 Claude Code 专用分组。
+- Cherry Studio：支持多种接口，可选择 Auto 分组，由系统自动匹配。
+- Codex：仅支持 Responses 接口，因此使用 Codex 时请选择 Codex 专用分组。
 
-默认令牌分组选择 `auto` 即可，但是模型显示可能不准确，有些模型仅支持claude接口，有些仅openai接口，如果想先试试，可以先用auto，如果选了一直没有回复或者报错，请把使用记录发给我：
+<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811131858643.jpg_view" alt="image-20260811131858580" style="zoom: 33%;" />
 
-<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811115510626.jpg_view" alt="image-20260811115510027" style="zoom:50%;" />
+默认令牌分组选择 `auto` 即可，但是模型显示可能不准确，有些模型仅支持claude接口，有些仅openai接口，如果想先试试，可以先用auto，如果选了一直没有回复或者报错，请把使用记录发给管理人员：
+
+<img src="https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811115510626.jpg_view" alt="image-20260811115510027" style="zoom: 50%;" />
 
 下文各章节需要填写的 API Key，均在这里自行创建并复制：
 
@@ -80,7 +81,7 @@ Claude Code 可以通过命令行安装，也可以在 **VS Code / PyCharm 插�
 
 VS Code 插件安装：
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260421192539029.png_neo" alt="image-20260421192539029" style="zoom: 67%;" />
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260421192539029.png_neo" alt="image-20260421192539029" style="zoom: 50%;" />
 
 安装完成后不需要登录，保持当前状态即可：
 
@@ -97,7 +98,7 @@ VS Code 插件安装：
 - DeepSeek V4 系列模型
 - GLM 系列
 - Kimi 系列
-- MiniMax 系列 【已剔除，后续考虑添加】
+- MiniMax 系列 
 
 #### 1. 在 cc-switch 中添加供应商
 
@@ -193,10 +194,6 @@ API key：NEWAPI_CC_KEY【替换为你在第零节自行创建的 API Key】
 
 <img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617215053339.png" alt="image-20260617215053339" style="zoom:50%;" />
 
-模型配置推荐如下，可参考截图或复制下方 JSON 覆盖：
-
-![image-20260617215256740](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260617215256740.png)
-
 ## 四、Codex 接入配置
 
 ### 1. 安装 Codex
@@ -236,12 +233,12 @@ Codex 国产模型接入，目前已经更新支持国产模型，优先推荐�
 国产模型包括：
 
 - **GLM-5.2**
-- **K3**
+- **K3**，**kimi-k2.7-code**
 - **DeepSeek V4 Flash**
+- **MiMo**
+- **muse-spark-1.2-contributor**
 
-其他陆续支持，会加入这里
-
-在CCswitch 里面：选择对应的模型，然后保存，**重启codex**，记住一定要重启：
+在CCswitch 里面：选择对应的模型，然后保存，**重启codex**，**记住一定要重启**：
 
 ![image-20260715141218167](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715141218167.png)
 
@@ -262,9 +259,13 @@ API 密钥：NEWAPI_CHERRY_KEY【替换为你在第零节自行创建的 API Key
 API 地址：http://47.113.198.26
 ```
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260421231811438.png_neo" alt="image-20260421231811438" style="zoom: 50%;" />
+搜索New API：
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260506150012340.png_neo" alt="image-20260506150012340" style="zoom: 33%;" />
+![image-20260903153108473](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903153108514.jpg/kawu_tech_ez)
+
+![image-20260903152714971](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903152715067.jpg/kawu_tech_ez)
+
+填写上述信息。
 
 ### 2. 选择模型并添加到对话
 
@@ -278,33 +279,61 @@ API 地址：http://47.113.198.26
 
 - **GPT 系列模型：OpenAI-Response 端点**
 - **Claude 系列模型：Anthropic 端点**
-- **Gemini 系列模型：Gemini 端点**
+- **Gemini 系列模型：Gemini 端点**；**特殊：Gemini-3.7 flash ：OpenAI 端点**
 - **Kimi 系列模型：OpenAI 端点**
 - **GLM 系列模型：Anthropic 端点 / OpenAI 端点**
-- **MiniMax 系列模型：Anthropic 端点**
-- **Mimo 系列模型：Anthropic 端点**
+- **MiniMax 系列模型：OpenAI 端点**
+- **MiMo 系列模型：Anthropic 端点**
 
-> 修改的原因在于各家接口标准不一致，为了满血体验最好按需修改。
+> 修改的原因在于：各家接口标准不一致，中转战虽然会自动转换，但是为了满血体验，避免降智最好按需修改。
 
 下面举两个例子。添加模型后点击模型设置：
 
-![image-20260715122327316](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715122327316.png)
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903135402049.jpg_neo" alt="image-20260903135354934" style="zoom: 50%;" />
 
 更新模型端点：
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715122207624.png" alt="image-20260715122207624" style="zoom: 50%;" />
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903135517154.jpg_neo" alt="image-20260903135517096" style="zoom:67%;" />
 
-Claude 系列模型：
+需要注意的是，请不要使用下列模型，下列模型是为了上下文探测使用的，请不要主动调用：
 
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260506150442656.png_neo" alt="image-20260506150442656" style="zoom:67%;" />
-
-<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260506150459853.png_neo" alt="image-20260506150459853" style="zoom: 50%;" />
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903135902725.jpg_neo" alt="image-20260903135902694" style="zoom:50%;" />
 
 Google 系列端口修改：
 
 ![image-20260507163336410](https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260507163336410.png_neo)
 
 <img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260507163346370.png_neo" alt="image-20260507163346370" style="zoom: 50%;" />
+
+### 3.选择生图模型并添加到对话
+
+新增生图模型，GPT-image-2，设置如下：
+
+首先添加生图模型：
+
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903141233442.jpg_neo" alt="image-20260903141233401" style="zoom: 50%;" />
+
+然后配置模型链接信息：
+
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903142016754.jpg_neo" alt="image-20260903142016699" style="zoom:50%;" />
+
+填写：`http://47.113.198.26/v1`
+
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903143302092.jpg/kawu_tech_ez" alt="image-20260903143302045" style="zoom: 50%;" />
+
+同时设置默认模型：
+
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903145113066.jpg/kawu_tech_ez" alt="image-20260903145113000" style="zoom: 50%;" />
+
+在使用的时候工具栏要开启生成：
+
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903150435441.jpg/kawu_tech_ez" alt="image-20260903150435395" style="zoom:50%;" />
+
+效果：
+
+<img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/20260903150243829.jpg/kawu_tech_ez" alt="image-20260903150243761" style="zoom:50%;" />
+
+
 
 ## QA：常见报错及其原因
 
@@ -314,7 +343,7 @@ Google 系列端口修改：
 
 **status_code=400, Error from provider (Console): Upstream request failed: [invalid_request_error] Failed to deserialize the JSON body into the target type: tools[14].function: missing field `name` at line 1 column 17015**
 
-api 密钥的端点选择不正确，应该选择软件对应的端点：
+api 密钥的端点选择不正确，请去后台查看使用记录，应该选择软件适配对应的端点：
 
 ![image-20260811145637249](https://official-oss.oss-cn-hongkong.aliyuncs.com/docs/20260811145637353.jpg_view)
 
@@ -328,7 +357,7 @@ api 密钥的端点选择不正确，应该选择软件对应的端点：
 codex channel: /v1/chat/completions endpoint not supported (request id: 202607150616095162701178268d9d6OnzYLdSu)
 ```
 
-这里的报错正好相反，这里是cherry studio的端口选择不正确，选择对应的端口即可解决：
+这里的报错正好相反，这里是cherry studio软件的端口选择不正确，根据上文选择对应的端点类型即可解决：
 
 <img src="https://neonexus-picture.oss-ap-southeast-1.aliyuncs.com/test/image-20260715141753537.png" alt="image-20260715141753537" style="zoom: 50%;" />
 
@@ -337,6 +366,3 @@ codex channel: /v1/chat/completions endpoint not supported (request id: 20260715
 #### 3.报错 502 upstream error
 
 **近期梯子不太稳定，如果频繁出现，请联系管理员切换备用梯子，或者先使用国产模型。**
-
-
-
